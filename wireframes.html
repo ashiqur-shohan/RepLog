@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>replog · Wireframes (v1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          background:'var(--background)', foreground:'var(--foreground)',
+          card:'var(--card)', cardfg:'var(--card-foreground)',
+          muted:'var(--muted)', mutedfg:'var(--muted-foreground)',
+          border:'var(--border)', primary:'var(--primary)',
+          primaryfg:'var(--primary-foreground)', accent:'var(--accent)',
+          destructive:'var(--destructive)', success:'var(--success)',
+        },
+        fontFamily: {
+          sans:['Geist','ui-sans-serif','system-ui','sans-serif'],
+          mono:['"Geist Mono"','ui-monospace','monospace'],
+        },
+        borderRadius:{ sm:'6px', md:'10px', lg:'16px', xl:'24px' },
+        boxShadow:{
+          'glow-primary':'0 0 24px rgba(232,255,92,0.25)',
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root.dark {
+    --background:#0A0B0D; --foreground:#F4F4F5;
+    --card:#131418; --card-foreground:#F4F4F5;
+    --muted:#1C1D22; --muted-foreground:#8A8B92;
+    --border:#26272D; --primary:#E8FF5C;
+    --primary-foreground:#0A0B0D; --accent:#FF5A1F;
+    --destructive:#F43F5E; --success:#22C55E;
+  }
+  :root.light {
+    --background:#FAFAF9; --foreground:#0A0B0D;
+    --card:#FFFFFF; --card-foreground:#0A0B0D;
+    --muted:#F1F1EF; --muted-foreground:#6B6C72;
+    --border:#E5E5E3; --primary:#1A1B1F;
+    --primary-foreground:#E8FF5C; --accent:#E04A0F;
+    --destructive:#E11D48; --success:#16A34A;
+  }
+  body { background:var(--background); color:var(--foreground); font-family:'Geist',system-ui,sans-serif; }
+  .mono { font-family:'Geist Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  .device-mobile { width:390px; height:780px; border-radius:32px; border:1px solid var(--border); overflow:hidden; background:var(--background); position:relative; flex:none; box-shadow:0 30px 60px rgba(0,0,0,0.45); }
+  .device-desktop { width:1180px; height:760px; border-radius:16px; border:1px solid var(--border); overflow:hidden; background:var(--background); position:relative; flex:none; box-shadow:0 30px 60px rgba(0,0,0,0.45); }
+  .scrollarea { overflow-y:auto; }
+  .scrollarea::-webkit-scrollbar { width:6px; }
+  .scrollarea::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  .label-chip { font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted-foreground); }
+  .ring-focus:focus { outline:2px solid var(--primary); outline-offset:2px; }
+  /* SVG icon helpers */
+  svg.icon { width:20px; height:20px; stroke:currentColor; stroke-width:1.75; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  svg.icon-sm { width:16px; height:16px; }
+  svg.icon-lg { width:24px; height:24px; }
+  .swatch { width:64px; height:64px; border-radius:10px; border:1px solid var(--border); }
+  .grid-12 { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:16px; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ===== Top toolbar ===== -->
+<header class="sticky top-0 z-50 backdrop-blur bg-background/80 border-b border-border">
+  <div class="max-w-[1400px] mx-auto px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-md bg-primary grid place-items-center">
+        <span class="mono font-semibold text-primaryfg">R</span>
+      </div>
+      <div class="leading-tight">
+        <div class="font-semibold">replog · wireframes</div>
+        <div class="text-xs text-mutedfg">v1 · dark-mode default · jump to a screen below</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="theme-toggle" class="text-sm px-3 py-1.5 rounded-md border border-border hover:bg-muted">Toggle light/dark</button>
+      <a href="#tokens" class="text-sm px-3 py-1.5 rounded-md border border-border hover:bg-muted">Tokens</a>
+    </div>
+  </div>
+  <nav class="max-w-[1400px] mx-auto px-6 pb-3 flex flex-wrap gap-2 text-xs">
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#landing">Landing</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#pricing">Pricing</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#signup">Signup</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#onboarding">Onboarding</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#dashboard-mobile">Dashboard (mobile)</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#dashboard-desktop">Dashboard (desktop)</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#library">Library</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#library-filtered">Library · chest</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#exercise-detail">Exercise detail</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#plan-builder">Plan builder</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#workout-logger"><span class="text-primary">Active logger★</span></a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#rest-timer">Rest timer</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#pr-celebration">PR celebration</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#history">History</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#progress">Progress</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#profile">Profile</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#billing">Billing</a>
+    <a class="px-2 py-1 rounded bg-muted text-mutedfg hover:text-foreground" href="#tokens">Design tokens</a>
+  </nav>
+</header>
+
+<main class="max-w-[1400px] mx-auto px-6 py-10 space-y-16">
+
+<!-- ============================================================= -->
+<!-- LANDING -->
+<!-- ============================================================= -->
+<section id="landing">
+  <div class="mb-4">
+    <div class="label-chip">01 · marketing</div>
+    <h2 class="text-2xl font-semibold">Landing</h2>
+    <p class="text-mutedfg text-sm">Single-fold hero on mobile, two-fold on desktop. Lime CTA, mono numeric proof points.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <!-- desktop -->
+    <div class="device-desktop scrollarea">
+      <!-- nav -->
+      <div class="flex items-center justify-between px-10 py-5 border-b border-border">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-md bg-primary grid place-items-center mono text-primaryfg font-semibold">R</div>
+          <span class="font-semibold">replog</span>
+        </div>
+        <div class="flex gap-6 text-sm text-mutedfg">
+          <a>Features</a><a>Pricing</a><a>Blog</a><a>Sign in</a>
+          <button class="bg-primary text-primaryfg px-3 py-1.5 rounded-md font-medium">Get started</button>
+        </div>
+      </div>
+      <!-- hero -->
+      <div class="px-16 py-20 grid grid-cols-12 gap-10">
+        <div class="col-span-7">
+          <div class="text-xs mono uppercase tracking-widest text-primary mb-4">Home workouts · zero friction</div>
+          <h1 class="text-5xl font-semibold leading-tight">Log it.<br/>Move on.<br/>Lift again.</h1>
+          <p class="text-mutedfg mt-5 max-w-md">A focused workout tracker for people who train at home. Build your plan, log sets in seconds, watch your numbers climb.</p>
+          <div class="mt-6 flex gap-3">
+            <button class="bg-primary text-primaryfg px-5 py-3 rounded-md font-medium shadow-glow-primary">Start free</button>
+            <button class="border border-border px-5 py-3 rounded-md">See how it works</button>
+          </div>
+          <div class="mt-10 grid grid-cols-3 gap-6 max-w-lg">
+            <div><div class="mono text-3xl">150+</div><div class="text-xs text-mutedfg">curated exercises</div></div>
+            <div><div class="mono text-3xl">8</div><div class="text-xs text-mutedfg">muscle groups</div></div>
+            <div><div class="mono text-3xl">2s</div><div class="text-xs text-mutedfg">to log a set</div></div>
+          </div>
+        </div>
+        <div class="col-span-5">
+          <div class="rounded-xl border border-border bg-card p-6 shadow-glow-primary">
+            <div class="text-xs text-mutedfg mb-3">Today · Push day</div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-3 rounded-md bg-muted">
+                <span class="text-sm">Bench Press</span>
+                <span class="mono text-sm">80 × 8 @ 8</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-md bg-muted">
+                <span class="text-sm">Overhead Press</span>
+                <span class="mono text-sm">50 × 6 @ 9</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-md border border-primary/40">
+                <span class="text-sm">Tricep Pushdown</span>
+                <span class="mono text-sm text-primary">25 × 12 · PR</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- PRICING -->
+<!-- ============================================================= -->
+<section id="pricing">
+  <div class="mb-4">
+    <div class="label-chip">02 · marketing</div>
+    <h2 class="text-2xl font-semibold">Pricing</h2>
+    <p class="text-mutedfg text-sm">Two tiers. Pro gates: unlimited plans, custom exercises, progress photos, CSV export.</p>
+  </div>
+  <div class="device-desktop scrollarea">
+    <div class="px-16 py-16">
+      <h2 class="text-3xl font-semibold text-center">Free for life. Pro when you want more.</h2>
+      <div class="grid grid-cols-2 gap-6 mt-12 max-w-3xl mx-auto">
+        <div class="rounded-xl border border-border p-8">
+          <div class="text-sm text-mutedfg">Free</div>
+          <div class="mono text-5xl mt-2">$0</div>
+          <div class="text-xs text-mutedfg">forever</div>
+          <ul class="mt-6 space-y-2 text-sm">
+            <li>✓ 1 active workout plan</li>
+            <li>✓ Unlimited sessions</li>
+            <li>✓ Full exercise library</li>
+            <li>✓ History &amp; basic charts</li>
+          </ul>
+          <button class="w-full mt-8 border border-border py-3 rounded-md">Get started</button>
+        </div>
+        <div class="rounded-xl border-2 border-primary p-8 bg-card shadow-glow-primary">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-primary">Pro</div>
+            <span class="text-[10px] mono uppercase tracking-widest bg-primary text-primaryfg px-2 py-0.5 rounded">popular</span>
+          </div>
+          <div class="mono text-5xl mt-2">$5<span class="text-xl text-mutedfg">/mo</span></div>
+          <div class="text-xs text-mutedfg">cancel anytime · 14-day refund</div>
+          <ul class="mt-6 space-y-2 text-sm">
+            <li>✓ Unlimited workout plans</li>
+            <li>✓ Custom exercises</li>
+            <li>✓ Progress photos (private)</li>
+            <li>✓ CSV export</li>
+            <li>✓ Advanced charts &amp; trends</li>
+          </ul>
+          <button class="w-full mt-8 bg-primary text-primaryfg py-3 rounded-md font-medium">Upgrade to Pro</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- SIGNUP -->
+<!-- ============================================================= -->
+<section id="signup">
+  <div class="mb-4">
+    <div class="label-chip">03 · auth</div>
+    <h2 class="text-2xl font-semibold">Signup / Login</h2>
+    <p class="text-mutedfg text-sm">Centered card; OAuth first, email/password second.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="h-full grid place-items-center px-6">
+        <div class="w-full">
+          <div class="text-center mb-8">
+            <div class="w-12 h-12 mx-auto rounded-lg bg-primary grid place-items-center mono text-primaryfg text-xl font-semibold">R</div>
+            <h1 class="text-2xl font-semibold mt-4">Create your account</h1>
+            <div class="text-sm text-mutedfg">Track your home workouts in seconds.</div>
+          </div>
+          <button class="w-full border border-border rounded-md py-3 mb-2 text-sm flex items-center justify-center gap-2"><span>🟢</span> Continue with Google</button>
+          <button class="w-full border border-border rounded-md py-3 mb-5 text-sm flex items-center justify-center gap-2"><span>⚫</span> Continue with Apple</button>
+          <div class="flex items-center gap-3 text-xs text-mutedfg mb-5"><div class="flex-1 h-px bg-border"></div>or with email<div class="flex-1 h-px bg-border"></div></div>
+          <label class="text-xs text-mutedfg">Email</label>
+          <input class="w-full bg-muted border border-border rounded-md px-3 py-2.5 mt-1 mb-3 text-sm" value="alex@replog.app" />
+          <label class="text-xs text-mutedfg">Password</label>
+          <input type="password" class="w-full bg-muted border border-border rounded-md px-3 py-2.5 mt-1 mb-5 text-sm" value="••••••••" />
+          <button class="w-full bg-primary text-primaryfg py-3 rounded-md font-medium">Create account</button>
+          <div class="text-center text-sm text-mutedfg mt-4">Have an account? <span class="text-primary">Sign in</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- ONBOARDING -->
+<!-- ============================================================= -->
+<section id="onboarding">
+  <div class="mb-4">
+    <div class="label-chip">04 · onboarding</div>
+    <h2 class="text-2xl font-semibold">Onboarding (3 steps)</h2>
+    <p class="text-mutedfg text-sm">Goal · units · experience. Each step is one tap.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <!-- Step 1 -->
+    <div class="device-mobile">
+      <div class="px-5 pt-12 h-full flex flex-col">
+        <div class="flex items-center gap-1 mb-8"><div class="h-1 flex-1 bg-primary rounded"></div><div class="h-1 flex-1 bg-muted rounded"></div><div class="h-1 flex-1 bg-muted rounded"></div></div>
+        <div class="label-chip">Step 1 of 3</div>
+        <h1 class="text-2xl font-semibold mt-1">What's your goal?</h1>
+        <p class="text-sm text-mutedfg">Pick one. You can change later.</p>
+        <div class="mt-6 space-y-3">
+          <button class="w-full text-left p-4 rounded-lg border border-primary bg-primary/5"><div class="font-medium">Build muscle</div><div class="text-xs text-mutedfg">Hypertrophy · progressive overload</div></button>
+          <button class="w-full text-left p-4 rounded-lg border border-border"><div class="font-medium">Get stronger</div><div class="text-xs text-mutedfg">Heavy compounds · low reps</div></button>
+          <button class="w-full text-left p-4 rounded-lg border border-border"><div class="font-medium">Stay consistent</div><div class="text-xs text-mutedfg">Habit + general fitness</div></button>
+          <button class="w-full text-left p-4 rounded-lg border border-border"><div class="font-medium">Lose weight</div><div class="text-xs text-mutedfg">High volume · cardio mix</div></button>
+        </div>
+        <div class="mt-auto pb-6"><button class="w-full bg-primary text-primaryfg py-3 rounded-md font-medium">Continue</button></div>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div class="device-mobile">
+      <div class="px-5 pt-12 h-full flex flex-col">
+        <div class="flex items-center gap-1 mb-8"><div class="h-1 flex-1 bg-primary rounded"></div><div class="h-1 flex-1 bg-primary rounded"></div><div class="h-1 flex-1 bg-muted rounded"></div></div>
+        <div class="label-chip">Step 2 of 3</div>
+        <h1 class="text-2xl font-semibold mt-1">Units</h1>
+        <p class="text-sm text-mutedfg">All weights in the app will use this.</p>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button class="p-6 rounded-lg border-2 border-primary bg-primary/5 text-center"><div class="mono text-3xl">kg</div><div class="text-xs text-mutedfg">metric</div></button>
+          <button class="p-6 rounded-lg border border-border text-center"><div class="mono text-3xl">lb</div><div class="text-xs text-mutedfg">imperial</div></button>
+        </div>
+        <div class="mt-auto pb-6 flex gap-2"><button class="flex-1 border border-border py-3 rounded-md">Back</button><button class="flex-1 bg-primary text-primaryfg py-3 rounded-md font-medium">Continue</button></div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div class="device-mobile">
+      <div class="px-5 pt-12 h-full flex flex-col">
+        <div class="flex items-center gap-1 mb-8"><div class="h-1 flex-1 bg-primary rounded"></div><div class="h-1 flex-1 bg-primary rounded"></div><div class="h-1 flex-1 bg-primary rounded"></div></div>
+        <div class="label-chip">Step 3 of 3</div>
+        <h1 class="text-2xl font-semibold mt-1">How experienced are you?</h1>
+        <p class="text-sm text-mutedfg">We'll suggest plans that fit.</p>
+        <div class="mt-6 space-y-3">
+          <button class="w-full text-left p-4 rounded-lg border border-border"><div class="font-medium">Beginner</div><div class="text-xs text-mutedfg">0–6 months consistent training</div></button>
+          <button class="w-full text-left p-4 rounded-lg border border-primary bg-primary/5"><div class="font-medium">Intermediate</div><div class="text-xs text-mutedfg">6 months – 2 years</div></button>
+          <button class="w-full text-left p-4 rounded-lg border border-border"><div class="font-medium">Advanced</div><div class="text-xs text-mutedfg">2+ years, know your numbers</div></button>
+        </div>
+        <div class="mt-auto pb-6 flex gap-2"><button class="flex-1 border border-border py-3 rounded-md">Back</button><button class="flex-1 bg-primary text-primaryfg py-3 rounded-md font-medium">Finish</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DASHBOARD (MOBILE) -->
+<!-- ============================================================= -->
+<section id="dashboard-mobile">
+  <div class="mb-4">
+    <div class="label-chip">05 · home</div>
+    <h2 class="text-2xl font-semibold">Dashboard — mobile</h2>
+    <p class="text-mutedfg text-sm">Streak ring, today's workout, recent PRs strip, weekly heatmap. Bottom nav with elevated Log FAB.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 h-full scrollarea">
+        <!-- top -->
+        <div class="flex items-center justify-between mb-4">
+          <div><div class="text-xs text-mutedfg">Wednesday, May 21</div><div class="text-lg font-semibold">Hey, Ashiqur 👋</div></div>
+          <div class="w-9 h-9 rounded-full bg-muted grid place-items-center mono text-sm">A</div>
+        </div>
+        <!-- streak + week volume hero -->
+        <div class="p-5 rounded-xl bg-card border border-border">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-xs text-mutedfg">This week's volume</div>
+              <div class="mono text-4xl text-primary">12,840<span class="text-base text-mutedfg ml-1">kg</span></div>
+              <div class="text-xs text-mutedfg mt-1">+18% vs last week</div>
+            </div>
+            <div class="relative w-20 h-20">
+              <svg viewBox="0 0 36 36" class="w-full h-full -rotate-90"><circle cx="18" cy="18" r="15" stroke="var(--muted)" stroke-width="3" fill="none"/><circle cx="18" cy="18" r="15" stroke="var(--primary)" stroke-width="3" fill="none" stroke-dasharray="94.2" stroke-dashoffset="20" stroke-linecap="round"/></svg>
+              <div class="absolute inset-0 grid place-items-center"><div class="text-center"><div class="mono text-lg leading-none">7</div><div class="text-[10px] text-mutedfg">day streak</div></div></div>
+            </div>
+          </div>
+        </div>
+        <!-- today CTA -->
+        <button class="w-full mt-3 p-5 rounded-xl bg-primary text-primaryfg text-left shadow-glow-primary">
+          <div class="text-xs opacity-70">Today · Day 3</div>
+          <div class="text-lg font-semibold mt-0.5">Push · Chest &amp; Triceps</div>
+          <div class="mono text-xs opacity-80 mt-1">6 exercises · ~52 min</div>
+          <div class="mt-3 inline-flex items-center gap-1 text-sm font-medium">Start workout →</div>
+        </button>
+        <!-- PRs strip -->
+        <div class="mt-5">
+          <div class="flex items-center justify-between mb-2">
+            <div class="label-chip">Recent PRs</div>
+            <a class="text-xs text-primary">See all</a>
+          </div>
+          <div class="flex gap-2 overflow-x-auto pb-1">
+            <div class="flex-none w-36 p-3 rounded-lg bg-card border border-accent/40">
+              <div class="text-xs text-mutedfg">Bench Press</div>
+              <div class="mono text-xl mt-1">85 <span class="text-mutedfg">× 5</span></div>
+              <div class="text-[10px] text-accent mt-1">PR · 2 days ago</div>
+            </div>
+            <div class="flex-none w-36 p-3 rounded-lg bg-card border border-accent/40">
+              <div class="text-xs text-mutedfg">Deadlift</div>
+              <div class="mono text-xl mt-1">140 <span class="text-mutedfg">× 3</span></div>
+              <div class="text-[10px] text-accent mt-1">PR · 5 days ago</div>
+            </div>
+            <div class="flex-none w-36 p-3 rounded-lg bg-card border border-border">
+              <div class="text-xs text-mutedfg">Pull-up</div>
+              <div class="mono text-xl mt-1">BW <span class="text-mutedfg">× 12</span></div>
+              <div class="text-[10px] text-mutedfg mt-1">1 week ago</div>
+            </div>
+          </div>
+        </div>
+        <!-- weekly heatmap -->
+        <div class="mt-5">
+          <div class="label-chip mb-2">Last 8 weeks</div>
+          <div class="grid grid-cols-7 gap-1.5">
+            <!-- 8 rows × 7 cols heatmap -->
+            <!-- generate 56 cells, mostly muted, a few primary -->
+            <!-- this is approximate to convey the feel -->
+            <!-- row 1 --><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/30"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/60"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/40"></div><div class="aspect-square rounded-sm bg-muted"></div>
+            <div class="aspect-square rounded-sm bg-primary/70"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/50"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/80"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/40"></div>
+            <div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/60"></div><div class="aspect-square rounded-sm bg-primary/40"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/70"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/50"></div>
+            <div class="aspect-square rounded-sm bg-primary/40"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/80"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary/60"></div><div class="aspect-square rounded-sm bg-muted"></div><div class="aspect-square rounded-sm bg-primary"></div>
+          </div>
+        </div>
+      </div>
+      <!-- bottom nav -->
+      <div class="absolute bottom-0 left-0 right-0 border-t border-border bg-background">
+        <div class="grid grid-cols-5 items-end px-3 pt-2 pb-3">
+          <button class="text-center text-primary"><div class="grid place-items-center"><svg class="icon" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg></div><div class="text-[10px] mt-0.5">Home</div></button>
+          <button class="text-center text-mutedfg"><div class="grid place-items-center"><svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 12h16"/></svg></div><div class="text-[10px] mt-0.5">Library</div></button>
+          <button class="text-center"><div class="w-12 h-12 -mt-6 mx-auto rounded-full bg-primary text-primaryfg grid place-items-center shadow-glow-primary"><svg class="icon-lg icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div></button>
+          <button class="text-center text-mutedfg"><div class="grid place-items-center"><svg class="icon" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/></svg></div><div class="text-[10px] mt-0.5">Progress</div></button>
+          <button class="text-center text-mutedfg"><div class="grid place-items-center"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0116 0"/></svg></div><div class="text-[10px] mt-0.5">Profile</div></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DASHBOARD (DESKTOP) -->
+<!-- ============================================================= -->
+<section id="dashboard-desktop">
+  <div class="mb-4">
+    <div class="label-chip">06 · home</div>
+    <h2 class="text-2xl font-semibold">Dashboard — desktop</h2>
+    <p class="text-mutedfg text-sm">240px sidebar + 12-col content. Stat row, next workout, side rail with streak &amp; PRs.</p>
+  </div>
+  <div class="device-desktop">
+    <div class="h-full grid grid-cols-[240px_1fr]">
+      <!-- sidebar -->
+      <aside class="border-r border-border px-4 py-6 flex flex-col">
+        <div class="flex items-center gap-2 mb-8 px-2">
+          <div class="w-8 h-8 rounded-md bg-primary grid place-items-center mono font-semibold text-primaryfg">R</div>
+          <span class="font-semibold">replog</span>
+        </div>
+        <nav class="space-y-1 text-sm">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-md bg-muted text-foreground"><svg class="icon" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg> Dashboard</a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-md text-mutedfg hover:bg-muted"><svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16"/></svg> Library</a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-md text-mutedfg hover:bg-muted"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3v18M16 3v18M4 8h16M4 16h16"/></svg> Plans</a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-md text-mutedfg hover:bg-muted"><svg class="icon" viewBox="0 0 24 24"><path d="M3 12l4-7 4 11 4-8 4 4 2-3"/></svg> Progress</a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-md text-mutedfg hover:bg-muted"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l3 2"/></svg> History</a>
+        </nav>
+        <div class="mt-auto p-3 rounded-lg bg-muted text-xs">
+          <div class="text-mutedfg">Free plan</div>
+          <div class="font-medium mt-1">1 of 1 plans used</div>
+          <button class="mt-2 w-full bg-primary text-primaryfg rounded py-1.5 text-xs font-medium">Upgrade to Pro</button>
+        </div>
+      </aside>
+      <!-- content -->
+      <div class="p-8 scrollarea">
+        <div class="flex items-center justify-between mb-6">
+          <div><div class="text-xs text-mutedfg">Wednesday, May 21</div><h1 class="text-2xl font-semibold">Hey, Ashiqur</h1></div>
+          <div class="flex gap-2">
+            <button class="border border-border px-3 py-2 rounded-md text-sm">Quick log</button>
+            <button class="bg-primary text-primaryfg px-3 py-2 rounded-md text-sm font-medium">Start today's workout</button>
+          </div>
+        </div>
+        <!-- stat row -->
+        <div class="grid grid-cols-4 gap-4">
+          <div class="p-5 rounded-lg border border-border bg-card"><div class="text-xs text-mutedfg">Streak</div><div class="mono text-3xl mt-1">7<span class="text-base text-mutedfg ml-1">days</span></div></div>
+          <div class="p-5 rounded-lg border border-border bg-card"><div class="text-xs text-mutedfg">Volume · this week</div><div class="mono text-3xl mt-1 text-primary">12,840</div><div class="text-xs text-success mt-1">+18%</div></div>
+          <div class="p-5 rounded-lg border border-border bg-card"><div class="text-xs text-mutedfg">Sessions · this month</div><div class="mono text-3xl mt-1">14</div></div>
+          <div class="p-5 rounded-lg border border-border bg-card"><div class="text-xs text-mutedfg">PRs · this month</div><div class="mono text-3xl mt-1">3</div></div>
+        </div>
+        <!-- next workout + side -->
+        <div class="grid grid-cols-12 gap-4 mt-4">
+          <div class="col-span-8 p-6 rounded-lg border border-border bg-card">
+            <div class="flex items-center justify-between">
+              <div><div class="text-xs text-mutedfg">Today · Day 3</div><div class="text-xl font-semibold mt-0.5">Push · Chest &amp; Triceps</div></div>
+              <button class="bg-primary text-primaryfg px-4 py-2 rounded-md text-sm font-medium">Start →</button>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-4">
+              <div class="p-3 rounded-md bg-muted flex items-center justify-between"><span class="text-sm">Bench Press</span><span class="mono text-xs text-mutedfg">4 × 5–8</span></div>
+              <div class="p-3 rounded-md bg-muted flex items-center justify-between"><span class="text-sm">Incline DB Press</span><span class="mono text-xs text-mutedfg">3 × 8–10</span></div>
+              <div class="p-3 rounded-md bg-muted flex items-center justify-between"><span class="text-sm">Overhead Press</span><span class="mono text-xs text-mutedfg">3 × 6–8</span></div>
+              <div class="p-3 rounded-md bg-muted flex items-center justify-between"><span class="text-sm">Lateral Raise</span><span class="mono text-xs text-mutedfg">3 × 12</span></div>
+              <div class="p-3 rounded-md bg-muted flex items-center justify-between"><span class="text-sm">Tricep Pushdown</span><span class="mono text-xs text-mutedfg">3 × 12</span></div>
+              <div class="p-3 rounded-md bg-muted flex items-center justify-between"><span class="text-sm">Overhead Tricep Ext.</span><span class="mono text-xs text-mutedfg">2 × 15</span></div>
+            </div>
+          </div>
+          <div class="col-span-4 space-y-4">
+            <div class="p-5 rounded-lg border border-border bg-card">
+              <div class="label-chip mb-2">Recent PRs</div>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-sm"><span>Bench Press</span><span class="mono text-accent">85 × 5</span></div>
+                <div class="flex items-center justify-between text-sm"><span>Deadlift</span><span class="mono text-accent">140 × 3</span></div>
+                <div class="flex items-center justify-between text-sm"><span>Pull-up</span><span class="mono">BW × 12</span></div>
+              </div>
+            </div>
+            <div class="p-5 rounded-lg border border-border bg-card">
+              <div class="label-chip mb-2">Weekly volume by muscle</div>
+              <div class="space-y-2 text-xs">
+                <div><div class="flex justify-between mb-1"><span>Chest</span><span class="mono">3,240 kg</span></div><div class="h-1 bg-muted rounded"><div class="h-1 bg-primary rounded" style="width:80%"></div></div></div>
+                <div><div class="flex justify-between mb-1"><span>Back</span><span class="mono">2,890 kg</span></div><div class="h-1 bg-muted rounded"><div class="h-1 bg-primary rounded" style="width:70%"></div></div></div>
+                <div><div class="flex justify-between mb-1"><span>Legs</span><span class="mono">4,120 kg</span></div><div class="h-1 bg-muted rounded"><div class="h-1 bg-primary rounded" style="width:95%"></div></div></div>
+                <div><div class="flex justify-between mb-1"><span>Shoulders</span><span class="mono">1,540 kg</span></div><div class="h-1 bg-muted rounded"><div class="h-1 bg-primary rounded" style="width:40%"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- LIBRARY (muscle group grid) -->
+<!-- ============================================================= -->
+<section id="library">
+  <div class="mb-4">
+    <div class="label-chip">07 · library</div>
+    <h2 class="text-2xl font-semibold">Exercise library — grid</h2>
+    <p class="text-mutedfg text-sm">8 muscle groups. Tap to drill in. Search top-sticky.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <h1 class="text-xl font-semibold">Library</h1>
+        <div class="mt-3 flex items-center gap-2 bg-muted rounded-md px-3 py-2.5">
+          <svg class="icon icon-sm text-mutedfg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input class="bg-transparent text-sm w-full outline-none" placeholder="Search exercises…" />
+        </div>
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Chest</div><div class="flex items-end justify-between"><div class="mono text-2xl">18</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Back</div><div class="flex items-end justify-between"><div class="mono text-2xl">22</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Shoulders</div><div class="flex items-end justify-between"><div class="mono text-2xl">16</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Biceps</div><div class="flex items-end justify-between"><div class="mono text-2xl">14</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Triceps</div><div class="flex items-end justify-between"><div class="mono text-2xl">15</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Core</div><div class="flex items-end justify-between"><div class="mono text-2xl">20</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Quads</div><div class="flex items-end justify-between"><div class="mono text-2xl">17</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+          <div class="aspect-[4/3] rounded-lg border border-border bg-card p-3 flex flex-col justify-between"><div class="label-chip">Hams &amp; glutes</div><div class="flex items-end justify-between"><div class="mono text-2xl">19</div><div class="text-xs text-mutedfg">exercises</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- LIBRARY (filtered) -->
+<!-- ============================================================= -->
+<section id="library-filtered">
+  <div class="mb-4">
+    <div class="label-chip">08 · library</div>
+    <h2 class="text-2xl font-semibold">Library — Chest</h2>
+    <p class="text-mutedfg text-sm">Filter chips for equipment + difficulty. Tile layout.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <div class="flex items-center gap-2 text-sm text-mutedfg"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg> Library</div>
+        <h1 class="text-xl font-semibold mt-1">Chest <span class="text-mutedfg mono text-sm">(18)</span></h1>
+        <div class="flex gap-2 mt-3 overflow-x-auto pb-1 text-xs">
+          <button class="px-2.5 py-1 rounded-full bg-primary text-primaryfg whitespace-nowrap">All</button>
+          <button class="px-2.5 py-1 rounded-full bg-muted whitespace-nowrap">Barbell</button>
+          <button class="px-2.5 py-1 rounded-full bg-muted whitespace-nowrap">Dumbbell</button>
+          <button class="px-2.5 py-1 rounded-full bg-muted whitespace-nowrap">Bodyweight</button>
+          <button class="px-2.5 py-1 rounded-full bg-muted whitespace-nowrap">Cable</button>
+        </div>
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <!-- exercise tile pattern -->
+          <div class="rounded-lg border border-border overflow-hidden">
+            <div class="aspect-[16/9] bg-muted grid place-items-center"><span class="text-3xl">🏋️</span></div>
+            <div class="p-2.5"><div class="text-sm font-medium">Bench Press</div><div class="text-[10px] text-mutedfg">Chest · Barbell</div></div>
+          </div>
+          <div class="rounded-lg border border-border overflow-hidden">
+            <div class="aspect-[16/9] bg-muted grid place-items-center"><span class="text-3xl">🏋️</span></div>
+            <div class="p-2.5"><div class="text-sm font-medium">Incline DB Press</div><div class="text-[10px] text-mutedfg">Chest · Dumbbell</div></div>
+          </div>
+          <div class="rounded-lg border border-border overflow-hidden">
+            <div class="aspect-[16/9] bg-muted grid place-items-center"><span class="text-3xl">🤸</span></div>
+            <div class="p-2.5"><div class="text-sm font-medium">Push-up</div><div class="text-[10px] text-mutedfg">Chest · Bodyweight</div></div>
+          </div>
+          <div class="rounded-lg border border-border overflow-hidden">
+            <div class="aspect-[16/9] bg-muted grid place-items-center"><span class="text-3xl">🏋️</span></div>
+            <div class="p-2.5"><div class="text-sm font-medium">Dumbbell Fly</div><div class="text-[10px] text-mutedfg">Chest · Dumbbell</div></div>
+          </div>
+          <div class="rounded-lg border border-border overflow-hidden">
+            <div class="aspect-[16/9] bg-muted grid place-items-center"><span class="text-3xl">🤸</span></div>
+            <div class="p-2.5"><div class="text-sm font-medium">Dip</div><div class="text-[10px] text-mutedfg">Chest · Bodyweight</div></div>
+          </div>
+          <div class="rounded-lg border border-border overflow-hidden">
+            <div class="aspect-[16/9] bg-muted grid place-items-center"><span class="text-3xl">🏋️</span></div>
+            <div class="p-2.5"><div class="text-sm font-medium">Cable Crossover</div><div class="text-[10px] text-mutedfg">Chest · Cable</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- EXERCISE DETAIL -->
+<!-- ============================================================= -->
+<section id="exercise-detail">
+  <div class="mb-4">
+    <div class="label-chip">09 · library</div>
+    <h2 class="text-2xl font-semibold">Exercise detail</h2>
+    <p class="text-mutedfg text-sm">Hero video, instruction tabs, sticky "Add to workout" CTA.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile relative">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <div class="flex items-center justify-between text-sm text-mutedfg">
+          <span><svg class="icon icon-sm inline" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg> Chest</span>
+          <button class="text-mutedfg"><svg class="icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></button>
+        </div>
+        <div class="mt-3 aspect-[16/9] bg-muted rounded-lg grid place-items-center"><span class="text-5xl">🏋️</span></div>
+        <h1 class="text-2xl font-semibold mt-4">Bench Press</h1>
+        <div class="flex gap-2 mt-2">
+          <span class="text-[10px] mono uppercase tracking-widest px-2 py-0.5 rounded bg-muted text-mutedfg">Chest</span>
+          <span class="text-[10px] mono uppercase tracking-widest px-2 py-0.5 rounded bg-muted text-mutedfg">Triceps</span>
+          <span class="text-[10px] mono uppercase tracking-widest px-2 py-0.5 rounded bg-muted text-mutedfg">Barbell</span>
+        </div>
+        <!-- tabs -->
+        <div class="mt-5 flex gap-4 border-b border-border text-sm">
+          <button class="pb-2 border-b-2 border-primary text-primary">Instructions</button>
+          <button class="pb-2 text-mutedfg">History</button>
+          <button class="pb-2 text-mutedfg">Records</button>
+        </div>
+        <div class="mt-4 space-y-3 text-sm text-mutedfg">
+          <p>1. Lie flat on a bench with eyes under the bar.</p>
+          <p>2. Grip slightly wider than shoulders. Retract shoulder blades.</p>
+          <p>3. Unrack and lower bar to mid-chest with elbows ~45°.</p>
+          <p>4. Press up explosively without flaring the elbows.</p>
+        </div>
+        <div class="mt-6 p-4 rounded-lg border border-accent/40 bg-card">
+          <div class="text-xs text-mutedfg">Personal record</div>
+          <div class="mono text-3xl text-accent mt-1">85 <span class="text-mutedfg text-lg">× 5</span></div>
+          <div class="text-xs text-mutedfg mt-1">2 days ago</div>
+        </div>
+      </div>
+      <!-- sticky CTA -->
+      <div class="absolute bottom-0 left-0 right-0 px-5 pb-5 pt-3 bg-gradient-to-t from-background to-transparent">
+        <button class="w-full bg-primary text-primaryfg py-3 rounded-md font-medium">Add to workout</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- PLAN BUILDER -->
+<!-- ============================================================= -->
+<section id="plan-builder">
+  <div class="mb-4">
+    <div class="label-chip">10 · plans</div>
+    <h2 class="text-2xl font-semibold">Plan builder</h2>
+    <p class="text-mutedfg text-sm">Day tabs, draggable exercise rows with target sets/reps/rest, picker drawer.</p>
+  </div>
+  <div class="device-desktop">
+    <div class="h-full grid grid-cols-[240px_1fr_320px]">
+      <!-- sidebar (collapsed nav) -->
+      <aside class="border-r border-border px-4 py-6">
+        <div class="flex items-center gap-2 mb-8 px-2">
+          <div class="w-8 h-8 rounded-md bg-primary grid place-items-center mono font-semibold text-primaryfg">R</div>
+          <span class="font-semibold">replog</span>
+        </div>
+        <div class="text-xs text-mutedfg px-3 mb-2">My plans</div>
+        <div class="space-y-1">
+          <a class="block px-3 py-2 rounded-md bg-muted text-sm">PPL · 6-day <span class="text-[10px] text-primary ml-1">active</span></a>
+          <a class="block px-3 py-2 rounded-md text-sm text-mutedfg">Upper / Lower · 4-day</a>
+          <a class="block px-3 py-2 rounded-md text-sm text-mutedfg">+ New plan</a>
+        </div>
+      </aside>
+      <!-- main editor -->
+      <div class="p-6 scrollarea">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs text-mutedfg">Editing plan</div>
+            <h1 class="text-xl font-semibold">PPL · 6-day</h1>
+          </div>
+          <div class="flex gap-2">
+            <button class="border border-border px-3 py-1.5 rounded-md text-sm">Duplicate</button>
+            <button class="bg-primary text-primaryfg px-3 py-1.5 rounded-md text-sm font-medium">Save</button>
+          </div>
+        </div>
+        <!-- day tabs -->
+        <div class="mt-5 flex gap-1 border-b border-border overflow-x-auto">
+          <button class="px-4 py-2 text-sm border-b-2 border-primary text-primary">Day 1 · Push</button>
+          <button class="px-4 py-2 text-sm text-mutedfg">Day 2 · Pull</button>
+          <button class="px-4 py-2 text-sm text-mutedfg">Day 3 · Legs</button>
+          <button class="px-4 py-2 text-sm text-mutedfg">Day 4 · Push</button>
+          <button class="px-4 py-2 text-sm text-mutedfg">Day 5 · Pull</button>
+          <button class="px-4 py-2 text-sm text-mutedfg">Day 6 · Legs</button>
+          <button class="px-3 py-2 text-sm text-mutedfg">+ Day</button>
+        </div>
+        <!-- exercise rows -->
+        <div class="mt-5 space-y-2">
+          <!-- column headers -->
+          <div class="grid grid-cols-[24px_1fr_80px_80px_80px_32px] gap-3 text-[10px] uppercase tracking-widest text-mutedfg px-2"><div></div><div>Exercise</div><div class="text-center">Sets</div><div class="text-center">Reps</div><div class="text-center">Rest</div><div></div></div>
+          <div class="grid grid-cols-[24px_1fr_80px_80px_80px_32px] gap-3 items-center p-3 rounded-md border border-border bg-card">
+            <div class="text-mutedfg cursor-grab">⋮⋮</div>
+            <div class="text-sm font-medium">Bench Press</div>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="4"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="5–8"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="2m"/>
+            <button class="text-mutedfg">✕</button>
+          </div>
+          <div class="grid grid-cols-[24px_1fr_80px_80px_80px_32px] gap-3 items-center p-3 rounded-md border border-border bg-card">
+            <div class="text-mutedfg cursor-grab">⋮⋮</div>
+            <div class="text-sm font-medium">Incline DB Press</div>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="3"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="8–10"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="90s"/>
+            <button class="text-mutedfg">✕</button>
+          </div>
+          <div class="grid grid-cols-[24px_1fr_80px_80px_80px_32px] gap-3 items-center p-3 rounded-md border border-primary bg-card">
+            <div class="text-mutedfg cursor-grab">⋮⋮</div>
+            <div class="text-sm font-medium">Overhead Press</div>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="3"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="6–8"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="2m"/>
+            <button class="text-mutedfg">✕</button>
+          </div>
+          <div class="grid grid-cols-[24px_1fr_80px_80px_80px_32px] gap-3 items-center p-3 rounded-md border border-border bg-card">
+            <div class="text-mutedfg cursor-grab">⋮⋮</div>
+            <div class="text-sm font-medium">Lateral Raise</div>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="3"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="12"/>
+            <input class="bg-muted rounded text-center mono text-sm py-1.5" value="60s"/>
+            <button class="text-mutedfg">✕</button>
+          </div>
+          <div class="grid grid-cols-[24px_1fr_80px_80px_80px_32px] gap-3 items-center p-3 rounded-md border border-dashed border-border text-mutedfg text-sm cursor-pointer">
+            <div></div><div>+ Add exercise from library</div><div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      </div>
+      <!-- picker drawer -->
+      <aside class="border-l border-border p-5 scrollarea">
+        <div class="flex items-center justify-between mb-3"><div class="font-semibold text-sm">Exercise picker</div><button class="text-mutedfg text-sm">✕</button></div>
+        <div class="bg-muted rounded-md px-3 py-2 mb-3 flex items-center gap-2"><svg class="icon icon-sm text-mutedfg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input class="bg-transparent text-sm w-full outline-none" placeholder="Search…" value="bench"/></div>
+        <div class="space-y-2">
+          <div class="p-2.5 rounded-md hover:bg-muted flex items-center justify-between"><div><div class="text-sm">Bench Press</div><div class="text-[10px] text-mutedfg">Chest · Barbell</div></div><button class="text-primary text-xs">Add</button></div>
+          <div class="p-2.5 rounded-md hover:bg-muted flex items-center justify-between"><div><div class="text-sm">Close-Grip Bench</div><div class="text-[10px] text-mutedfg">Triceps · Barbell</div></div><button class="text-primary text-xs">Add</button></div>
+          <div class="p-2.5 rounded-md hover:bg-muted flex items-center justify-between"><div><div class="text-sm">Incline Bench</div><div class="text-[10px] text-mutedfg">Chest · Barbell</div></div><button class="text-primary text-xs">Add</button></div>
+          <div class="p-2.5 rounded-md hover:bg-muted flex items-center justify-between"><div><div class="text-sm">DB Bench Press</div><div class="text-[10px] text-mutedfg">Chest · Dumbbell</div></div><button class="text-primary text-xs">Add</button></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- WORKOUT LOGGER ★ -->
+<!-- ============================================================= -->
+<section id="workout-logger">
+  <div class="mb-4">
+    <div class="label-chip">11 · workout · priority screen</div>
+    <h2 class="text-2xl font-semibold">Active workout logger ★</h2>
+    <p class="text-mutedfg text-sm">56px set rows · monospaced weight/reps · swipe-to-complete · persistent rest-timer bar.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile relative">
+      <!-- focus mode: no bottom tab nav -->
+      <div class="px-4 pt-10 pb-32 scrollarea h-full">
+        <!-- header -->
+        <div class="flex items-center justify-between">
+          <button class="text-mutedfg"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></svg></button>
+          <div class="text-center">
+            <div class="text-xs text-mutedfg mono">Exercise 3 of 6</div>
+            <div class="text-sm font-medium">Push · Chest &amp; Triceps</div>
+          </div>
+          <button class="text-mutedfg"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg></button>
+        </div>
+        <!-- duration / progress -->
+        <div class="mt-3 flex items-center justify-between text-xs">
+          <span class="mono">⏱ 24:18</span>
+          <div class="flex-1 mx-3 h-1 bg-muted rounded"><div class="h-1 bg-primary rounded" style="width:50%"></div></div>
+          <span class="mono text-mutedfg">3 / 6</span>
+        </div>
+        <!-- exercise card -->
+        <div class="mt-4">
+          <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-semibold">Overhead Press</h1>
+            <div class="flex gap-1.5">
+              <button class="w-8 h-8 rounded-md bg-muted grid place-items-center" title="Swap"><svg class="icon-sm icon" viewBox="0 0 24 24"><path d="M7 7h13l-3-3m3 3l-3 3M17 17H4l3-3m-3 3l3 3"/></svg></button>
+              <button class="w-8 h-8 rounded-md bg-muted grid place-items-center" title="Notes"><svg class="icon-sm icon" viewBox="0 0 24 24"><path d="M4 4h13l3 3v13H4z"/><path d="M8 12h8M8 16h5"/></svg></button>
+            </div>
+          </div>
+          <div class="text-xs text-mutedfg mono mt-1">Last: 50 × 6 @ RPE 8 · 5 days ago</div>
+        </div>
+        <!-- column header -->
+        <div class="mt-5 grid grid-cols-[32px_1fr_24px_1fr_56px_56px] gap-2 items-center text-[10px] mono uppercase tracking-widest text-mutedfg px-1">
+          <div class="text-center">Set</div><div class="text-center">Weight</div><div></div><div class="text-center">Reps</div><div class="text-center">RPE</div><div class="text-center">Done</div>
+        </div>
+        <!-- set rows -->
+        <div class="space-y-2 mt-2">
+          <!-- completed -->
+          <div class="grid grid-cols-[32px_1fr_24px_1fr_56px_56px] gap-2 items-center h-14 px-1 rounded-md bg-muted/60 opacity-80">
+            <div class="text-center mono text-sm">1</div>
+            <div class="text-center mono text-2xl line-through decoration-1">50</div>
+            <div class="text-center text-mutedfg">×</div>
+            <div class="text-center mono text-2xl line-through decoration-1">8</div>
+            <div class="text-center"><span class="mono text-xs px-2 py-0.5 rounded bg-background border border-border">8</span></div>
+            <div class="text-center"><div class="w-10 h-10 rounded-full bg-primary text-primaryfg grid place-items-center mx-auto"><svg class="icon-sm icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div></div>
+          </div>
+          <div class="grid grid-cols-[32px_1fr_24px_1fr_56px_56px] gap-2 items-center h-14 px-1 rounded-md bg-muted/60 opacity-80">
+            <div class="text-center mono text-sm">2</div>
+            <div class="text-center mono text-2xl line-through decoration-1">52.5</div>
+            <div class="text-center text-mutedfg">×</div>
+            <div class="text-center mono text-2xl line-through decoration-1">7</div>
+            <div class="text-center"><span class="mono text-xs px-2 py-0.5 rounded bg-background border border-border">8.5</span></div>
+            <div class="text-center"><div class="w-10 h-10 rounded-full bg-primary text-primaryfg grid place-items-center mx-auto"><svg class="icon-sm icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div></div>
+          </div>
+          <!-- active -->
+          <div class="grid grid-cols-[32px_1fr_24px_1fr_56px_56px] gap-2 items-center h-14 px-1 rounded-md border-2 border-primary bg-card shadow-glow-primary">
+            <div class="text-center mono text-sm text-primary">3</div>
+            <div class="text-center mono text-2xl">55</div>
+            <div class="text-center text-mutedfg">×</div>
+            <div class="text-center mono text-2xl">6</div>
+            <div class="text-center"><span class="mono text-xs px-2 py-0.5 rounded bg-primary text-primaryfg">9</span></div>
+            <div class="text-center"><div class="w-11 h-11 rounded-full border-2 border-primary grid place-items-center mx-auto"><svg class="icon-sm icon text-primary" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div></div>
+          </div>
+          <!-- queued -->
+          <div class="grid grid-cols-[32px_1fr_24px_1fr_56px_56px] gap-2 items-center h-14 px-1 rounded-md border border-border bg-card">
+            <div class="text-center mono text-sm text-mutedfg">4</div>
+            <div class="text-center mono text-2xl text-mutedfg">55</div>
+            <div class="text-center text-mutedfg">×</div>
+            <div class="text-center mono text-2xl text-mutedfg">—</div>
+            <div class="text-center"><span class="mono text-xs px-2 py-0.5 rounded bg-muted text-mutedfg">—</span></div>
+            <div class="text-center"><div class="w-11 h-11 rounded-full border border-border grid place-items-center mx-auto text-mutedfg"><svg class="icon-sm icon" viewBox="0 0 24 24"><path d="M5 12l5 5 9-11"/></svg></div></div>
+          </div>
+          <!-- add set -->
+          <button class="w-full h-12 rounded-md border border-dashed border-border text-sm text-mutedfg">+ Add set</button>
+        </div>
+        <!-- finish -->
+        <div class="mt-6">
+          <button class="w-full border border-border py-3 rounded-md text-sm">Next exercise →</button>
+        </div>
+      </div>
+      <!-- persistent rest timer bar -->
+      <div class="absolute bottom-0 left-0 right-0 border-t border-border bg-card">
+        <div class="px-4 py-3 flex items-center gap-3">
+          <button class="w-9 h-9 rounded-md bg-muted grid place-items-center mono text-xs">-15</button>
+          <div class="flex-1 text-center">
+            <div class="mono text-3xl text-primary leading-none">01:24</div>
+            <div class="text-[10px] text-mutedfg mt-0.5">Rest · tap to expand</div>
+          </div>
+          <button class="w-9 h-9 rounded-md bg-muted grid place-items-center mono text-xs">+15</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- side notes -->
+    <div class="max-w-sm text-sm text-mutedfg space-y-3">
+      <div class="p-4 rounded-md border border-border bg-card">
+        <div class="text-xs uppercase tracking-widest text-primary mb-1">Why this layout</div>
+        Row height is <span class="mono text-foreground">56px</span> — every interactive control meets the 44×44 touch target rule, including the swipe gesture surface. Weight + reps use Geist Mono so 7-digit set logs (e.g. <span class="mono text-foreground">102.5 × 12</span>) never shift the column.
+      </div>
+      <div class="p-4 rounded-md border border-border bg-card">
+        <div class="text-xs uppercase tracking-widest text-primary mb-1">Interactions</div>
+        Tap weight/reps → opens numeric bottom-sheet pad. RPE chip → opens 6–10 picker. Swipe row right→left completes (haptic medium). Long-press → context menu (Edit, Duplicate, Note, Remove).
+      </div>
+      <div class="p-4 rounded-md border border-border bg-card">
+        <div class="text-xs uppercase tracking-widest text-primary mb-1">Rest timer</div>
+        Auto-starts on set complete. 60s isolation / 90s compound default. Background-safe (system notification at 10s + 0s). Tap to expand into full sheet (see next screen).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- REST TIMER EXPANDED -->
+<!-- ============================================================= -->
+<section id="rest-timer">
+  <div class="mb-4">
+    <div class="label-chip">12 · workout</div>
+    <h2 class="text-2xl font-semibold">Rest timer — expanded sheet</h2>
+    <p class="text-mutedfg text-sm">240px progress ring · ±15s controls · skip CTA · auto-haptic at 0:00.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile relative">
+      <!-- darkened backdrop -->
+      <div class="absolute inset-0 bg-black/40"></div>
+      <!-- sheet -->
+      <div class="absolute bottom-0 left-0 right-0 bg-card border-t border-border rounded-t-xl px-6 pt-4 pb-6">
+        <div class="w-10 h-1 bg-mutedfg/40 rounded mx-auto mb-5"></div>
+        <div class="text-center">
+          <div class="label-chip">Rest</div>
+          <div class="relative w-60 h-60 mx-auto mt-4">
+            <svg viewBox="0 0 36 36" class="w-full h-full -rotate-90"><circle cx="18" cy="18" r="16" stroke="var(--muted)" stroke-width="1.5" fill="none"/><circle cx="18" cy="18" r="16" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-dasharray="100.5" stroke-dashoffset="38" stroke-linecap="round"/></svg>
+            <div class="absolute inset-0 grid place-items-center">
+              <div class="text-center">
+                <div class="mono text-6xl leading-none">01:24</div>
+                <div class="text-xs text-mutedfg mt-1">of 02:00</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-3 mt-6">
+            <button class="px-4 py-2.5 rounded-md bg-muted mono text-sm">-15s</button>
+            <button class="px-6 py-2.5 rounded-md bg-primary text-primaryfg font-medium">Skip rest</button>
+            <button class="px-4 py-2.5 rounded-md bg-muted mono text-sm">+15s</button>
+          </div>
+          <div class="text-xs text-mutedfg mt-4 mono">Up next · Set 4 · Overhead Press 55 × ?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- PR CELEBRATION -->
+<!-- ============================================================= -->
+<section id="pr-celebration">
+  <div class="mb-4">
+    <div class="label-chip">13 · workout</div>
+    <h2 class="text-2xl font-semibold">PR celebration</h2>
+    <p class="text-mutedfg text-sm">Accent flame · radial pulse · single haptic. No confetti.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile relative">
+      <div class="absolute inset-0 bg-black/50"></div>
+      <div class="absolute inset-0 grid place-items-center px-6">
+        <div class="text-center">
+          <div class="w-28 h-28 mx-auto rounded-full bg-accent/15 grid place-items-center relative">
+            <div class="absolute inset-0 rounded-full border border-accent/40 animate-pulse"></div>
+            <span class="text-5xl">🔥</span>
+          </div>
+          <div class="mt-6 text-xs mono uppercase tracking-widest text-accent">New personal record</div>
+          <div class="text-2xl font-semibold mt-1">Bench Press</div>
+          <div class="mono text-6xl mt-3">85 <span class="text-mutedfg text-2xl">× 5</span></div>
+          <div class="text-xs text-mutedfg mt-2">Previous best: 82.5 × 5</div>
+          <div class="mt-8 flex gap-2 justify-center">
+            <button class="px-5 py-2.5 rounded-md border border-border">Share</button>
+            <button class="px-5 py-2.5 rounded-md bg-primary text-primaryfg font-medium">Keep going</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- HISTORY -->
+<!-- ============================================================= -->
+<section id="history">
+  <div class="mb-4">
+    <div class="label-chip">14 · history</div>
+    <h2 class="text-2xl font-semibold">History</h2>
+    <p class="text-mutedfg text-sm">Sessions grouped by week, with weekly volume totals.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <h1 class="text-xl font-semibold">History</h1>
+        <!-- this week -->
+        <div class="mt-5 flex items-center justify-between">
+          <div class="label-chip">This week</div>
+          <div class="mono text-xs text-mutedfg">12,840 kg total</div>
+        </div>
+        <div class="mt-2 space-y-2">
+          <div class="p-3 rounded-md bg-card border border-border">
+            <div class="flex items-center justify-between"><div class="text-sm font-medium">Push · Chest &amp; Triceps</div><div class="mono text-xs text-mutedfg">Wed · 52m</div></div>
+            <div class="mono text-xs text-mutedfg mt-1">6 exercises · 18 sets · 4,210 kg</div>
+            <div class="mt-2 flex flex-wrap gap-1">
+              <span class="text-[10px] mono px-2 py-0.5 rounded bg-muted">Bench 80×8</span>
+              <span class="text-[10px] mono px-2 py-0.5 rounded bg-accent/15 text-accent">PR · Bench 85×5</span>
+              <span class="text-[10px] mono px-2 py-0.5 rounded bg-muted">OHP 55×6</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-md bg-card border border-border">
+            <div class="flex items-center justify-between"><div class="text-sm font-medium">Pull · Back &amp; Biceps</div><div class="mono text-xs text-mutedfg">Tue · 48m</div></div>
+            <div class="mono text-xs text-mutedfg mt-1">5 exercises · 16 sets · 4,620 kg</div>
+          </div>
+          <div class="p-3 rounded-md bg-card border border-border">
+            <div class="flex items-center justify-between"><div class="text-sm font-medium">Legs</div><div class="mono text-xs text-mutedfg">Mon · 61m</div></div>
+            <div class="mono text-xs text-mutedfg mt-1">5 exercises · 17 sets · 4,010 kg</div>
+          </div>
+        </div>
+        <!-- last week -->
+        <div class="mt-6 flex items-center justify-between">
+          <div class="label-chip">Last week</div>
+          <div class="mono text-xs text-mutedfg">10,890 kg total</div>
+        </div>
+        <div class="mt-2 space-y-2">
+          <div class="p-3 rounded-md bg-card border border-border"><div class="flex items-center justify-between"><div class="text-sm font-medium">Push</div><div class="mono text-xs text-mutedfg">Fri · 49m</div></div></div>
+          <div class="p-3 rounded-md bg-card border border-border"><div class="flex items-center justify-between"><div class="text-sm font-medium">Pull</div><div class="mono text-xs text-mutedfg">Thu · 46m</div></div></div>
+          <div class="p-3 rounded-md bg-card border border-border"><div class="flex items-center justify-between"><div class="text-sm font-medium">Legs</div><div class="mono text-xs text-mutedfg">Wed · 55m</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- PROGRESS -->
+<!-- ============================================================= -->
+<section id="progress">
+  <div class="mb-4">
+    <div class="label-chip">15 · progress</div>
+    <h2 class="text-2xl font-semibold">Progress</h2>
+    <p class="text-mutedfg text-sm">Metric tabs · time-range pills · lime line with gradient fill.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <h1 class="text-xl font-semibold">Progress</h1>
+        <div class="mt-3 flex gap-1 text-sm border-b border-border">
+          <button class="px-3 py-2 border-b-2 border-primary text-primary">Volume</button>
+          <button class="px-3 py-2 text-mutedfg">1RM</button>
+          <button class="px-3 py-2 text-mutedfg">Frequency</button>
+          <button class="px-3 py-2 text-mutedfg">Bodyweight</button>
+        </div>
+        <div class="mt-3 flex gap-1.5 text-xs">
+          <button class="px-2 py-1 rounded-full bg-muted">4W</button>
+          <button class="px-2 py-1 rounded-full bg-primary text-primaryfg">12W</button>
+          <button class="px-2 py-1 rounded-full bg-muted">6M</button>
+          <button class="px-2 py-1 rounded-full bg-muted">1Y</button>
+          <button class="px-2 py-1 rounded-full bg-muted">All</button>
+        </div>
+        <!-- fake chart -->
+        <div class="mt-4 p-4 rounded-lg bg-card border border-border">
+          <div class="text-xs text-mutedfg">Total weekly volume</div>
+          <div class="mono text-3xl text-primary mt-1">12,840 <span class="text-base text-mutedfg">kg</span></div>
+          <div class="text-xs text-success mt-0.5">+18% vs 12w avg</div>
+          <svg viewBox="0 0 300 120" class="w-full mt-4">
+            <defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#E8FF5C" stop-opacity="0.5"/><stop offset="100%" stop-color="#E8FF5C" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,90 L25,80 L50,85 L75,70 L100,60 L125,68 L150,55 L175,50 L200,45 L225,35 L250,40 L275,25 L300,30 L300,120 L0,120 Z" fill="url(#g1)"/>
+            <path d="M0,90 L25,80 L50,85 L75,70 L100,60 L125,68 L150,55 L175,50 L200,45 L225,35 L250,40 L275,25 L300,30" stroke="#E8FF5C" stroke-width="2" fill="none"/>
+            <circle cx="275" cy="25" r="3" fill="#E8FF5C"/>
+          </svg>
+          <div class="flex justify-between text-[10px] mono text-mutedfg mt-1"><span>Mar</span><span>Apr</span><span>May</span></div>
+        </div>
+        <!-- bodyweight measurement -->
+        <div class="mt-4 p-4 rounded-lg bg-card border border-border">
+          <div class="flex items-center justify-between"><div class="text-sm font-medium">Bodyweight</div><button class="text-xs text-primary">+ Add entry</button></div>
+          <div class="mono text-2xl mt-1">78.2 <span class="text-base text-mutedfg">kg</span></div>
+          <div class="text-xs text-mutedfg">+0.4 kg this month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- PROFILE -->
+<!-- ============================================================= -->
+<section id="profile">
+  <div class="mb-4">
+    <div class="label-chip">16 · profile</div>
+    <h2 class="text-2xl font-semibold">Profile</h2>
+    <p class="text-mutedfg text-sm">Avatar, name, goal, unit toggle, danger zone.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <h1 class="text-xl font-semibold">Profile</h1>
+        <div class="mt-4 flex items-center gap-4">
+          <div class="w-16 h-16 rounded-full bg-muted grid place-items-center mono text-xl">A</div>
+          <div><div class="font-medium">Ashiqur Rahman Shohan</div><div class="text-xs text-mutedfg">alex@replog.app</div><button class="text-xs text-primary mt-1">Change avatar</button></div>
+        </div>
+        <div class="mt-6 space-y-3">
+          <div class="p-3 rounded-md bg-card border border-border"><div class="text-xs text-mutedfg">Display name</div><div class="text-sm mt-0.5">Ashiqur Rahman Shohan</div></div>
+          <div class="p-3 rounded-md bg-card border border-border"><div class="text-xs text-mutedfg">Goal</div><div class="text-sm mt-0.5">Build muscle</div></div>
+          <div class="p-3 rounded-md bg-card border border-border flex items-center justify-between">
+            <div><div class="text-xs text-mutedfg">Weight unit</div><div class="text-sm mt-0.5 mono">kg</div></div>
+            <div class="flex gap-1 bg-muted rounded-md p-0.5 text-xs mono">
+              <button class="px-3 py-1 rounded bg-primary text-primaryfg">kg</button>
+              <button class="px-3 py-1 rounded text-mutedfg">lb</button>
+            </div>
+          </div>
+          <div class="p-3 rounded-md bg-card border border-border"><div class="text-xs text-mutedfg">Timezone</div><div class="text-sm mt-0.5">Asia/Dhaka</div></div>
+          <div class="p-3 rounded-md bg-card border border-border"><div class="text-xs text-mutedfg">Date of birth</div><div class="text-sm mt-0.5">—</div></div>
+        </div>
+        <div class="mt-6 p-3 rounded-md border border-destructive/30 bg-destructive/5">
+          <div class="text-xs text-destructive uppercase tracking-widest">Danger zone</div>
+          <div class="text-sm mt-1">Delete account</div>
+          <div class="text-xs text-mutedfg">Soft-deletes all your data. Purged after 30 days.</div>
+          <button class="mt-2 text-xs text-destructive border border-destructive/30 px-2.5 py-1 rounded">Delete account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- BILLING -->
+<!-- ============================================================= -->
+<section id="billing">
+  <div class="mb-4">
+    <div class="label-chip">17 · settings</div>
+    <h2 class="text-2xl font-semibold">Settings · Billing</h2>
+    <p class="text-mutedfg text-sm">Entitlement state · Stripe portal entry · invoice history.</p>
+  </div>
+  <div class="flex gap-8 flex-wrap">
+    <div class="device-mobile">
+      <div class="px-5 pt-12 pb-24 scrollarea h-full">
+        <div class="text-sm text-mutedfg flex items-center gap-2"><svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg> Settings</div>
+        <h1 class="text-xl font-semibold mt-1">Billing</h1>
+        <!-- current plan -->
+        <div class="mt-4 p-5 rounded-lg border border-primary bg-card shadow-glow-primary">
+          <div class="flex items-center justify-between">
+            <div><div class="text-xs text-primary mono uppercase tracking-widest">Pro</div><div class="mono text-2xl mt-1">$5<span class="text-sm text-mutedfg">/mo</span></div></div>
+            <span class="text-[10px] mono uppercase tracking-widest px-2 py-0.5 rounded bg-primary text-primaryfg">active</span>
+          </div>
+          <div class="text-xs text-mutedfg mt-3">Renews on Jun 18, 2026</div>
+          <div class="mt-3 grid grid-cols-2 gap-2">
+            <button class="border border-border py-2 rounded-md text-sm">Cancel</button>
+            <button class="bg-muted py-2 rounded-md text-sm">Manage billing</button>
+          </div>
+        </div>
+        <!-- entitlements -->
+        <div class="mt-4 p-4 rounded-md border border-border bg-card text-sm">
+          <div class="label-chip mb-2">Included with Pro</div>
+          <ul class="space-y-1.5 text-mutedfg">
+            <li>✓ Unlimited workout plans</li>
+            <li>✓ Custom exercises</li>
+            <li>✓ Progress photos</li>
+            <li>✓ CSV export</li>
+            <li>✓ Advanced charts</li>
+          </ul>
+        </div>
+        <!-- invoices -->
+        <div class="mt-5">
+          <div class="label-chip mb-2">Recent invoices</div>
+          <div class="space-y-1.5 text-sm">
+            <div class="flex items-center justify-between p-2.5 rounded-md bg-card border border-border"><span>May 2026</span><span class="mono text-mutedfg">$5.00 · paid</span></div>
+            <div class="flex items-center justify-between p-2.5 rounded-md bg-card border border-border"><span>Apr 2026</span><span class="mono text-mutedfg">$5.00 · paid</span></div>
+            <div class="flex items-center justify-between p-2.5 rounded-md bg-card border border-border"><span>Mar 2026</span><span class="mono text-mutedfg">$5.00 · paid</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- DESIGN TOKENS -->
+<!-- ============================================================= -->
+<section id="tokens">
+  <div class="mb-4">
+    <div class="label-chip">18 · design system</div>
+    <h2 class="text-2xl font-semibold">Tokens</h2>
+    <p class="text-mutedfg text-sm">Quick reference of the semantic palette and type scale.</p>
+  </div>
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#0A0B0D"></div><div class="text-xs mt-2">background</div><div class="text-[10px] mono text-mutedfg">#0A0B0D</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#131418"></div><div class="text-xs mt-2">card</div><div class="text-[10px] mono text-mutedfg">#131418</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#1C1D22"></div><div class="text-xs mt-2">muted</div><div class="text-[10px] mono text-mutedfg">#1C1D22</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#26272D"></div><div class="text-xs mt-2">border</div><div class="text-[10px] mono text-mutedfg">#26272D</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#E8FF5C"></div><div class="text-xs mt-2">primary</div><div class="text-[10px] mono text-mutedfg">#E8FF5C</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#FF5A1F"></div><div class="text-xs mt-2">accent · PR</div><div class="text-[10px] mono text-mutedfg">#FF5A1F</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#22C55E"></div><div class="text-xs mt-2">success</div><div class="text-[10px] mono text-mutedfg">#22C55E</div></div>
+    <div class="p-3 rounded-md border border-border bg-card"><div class="swatch" style="background:#F43F5E"></div><div class="text-xs mt-2">destructive</div><div class="text-[10px] mono text-mutedfg">#F43F5E</div></div>
+  </div>
+  <div class="mt-6 p-5 rounded-lg border border-border bg-card">
+    <div class="label-chip mb-2">Type scale</div>
+    <div class="space-y-1">
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">xs 12</span><span>The quick brown fox</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">sm 14</span><span class="text-sm">The quick brown fox</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">base 16</span><span class="text-base">The quick brown fox</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">lg 18</span><span class="text-lg">The quick brown fox</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">xl 20</span><span class="text-xl">The quick brown fox</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">2xl 24</span><span class="text-2xl">The quick brown fox</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">3xl 30</span><span class="text-3xl mono">102.5 kg</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">4xl 36</span><span class="text-4xl mono">102.5 kg</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">5xl 48</span><span class="text-5xl mono">01:24</span></div>
+      <div class="flex items-baseline gap-3"><span class="mono text-mutedfg text-xs w-12">6xl 60</span><span class="text-6xl mono text-accent">85 × 5</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="text-xs text-mutedfg text-center pt-6 pb-12">
+  replog wireframes · v1 · review then ✓ approve or send corrections back. Toggle theme to spot-check light mode.
+</footer>
+
+</main>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const r = document.documentElement;
+    if (r.classList.contains('dark')) { r.classList.remove('dark'); r.classList.add('light'); }
+    else { r.classList.remove('light'); r.classList.add('dark'); }
+  });
+</script>
+</body>
+</html>

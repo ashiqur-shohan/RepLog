@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"f:\\\\Personal\\\\replog\" -Exclude node_modules, .git, .next)",
+      "Bash(Select-Object -Property Name, PSIsContainer)",
+      "Bash(Format-List)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm install *)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\lib\\\\stripe\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\lib\\\\validators\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\api\\\\stripe\\\\webhook\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\app\\\\settings\\\\billing\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\app\\\\admin\\\\exercises\\\\new\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\app\\\\admin\\\\exercises\\\\[id]\\\\edit\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\app\\\\admin\\\\muscle-groups\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\app\\\\admin\\\\equipment\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\app\\\\app\\\\admin\\\\users\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"F:\\\\Personal\\\\replog\\\\components\\\\domain\\\\admin\")",
+      "Bash(Write-Host \"All directories created\")",
+      "Bash(mkdir -p /f/Personal/replog/lib/stripe /f/Personal/replog/lib/validators /f/Personal/replog/app/api/stripe/webhook /f/Personal/replog/app/app/settings/billing \"/f/Personal/replog/app/app/admin/exercises/new\" \"/f/Personal/replog/app/app/admin/exercises/[id]/edit\" \"/f/Personal/replog/app/app/admin/muscle-groups\" \"/f/Personal/replog/app/app/admin/equipment\" \"/f/Personal/replog/app/app/admin/users\" \"/f/Personal/replog/components/domain/admin\" && echo \"done\")",
+      "Bash(Get-ChildItem -Path . -Include \"sw.ts\",\"manifest.webmanifest\",\"favicon.svg\",\"instrumentation.ts\",\"instrumentation-client.ts\",\"sentry.server.config.ts\",\"sentry.edge.config.ts\",\"sentry.client.config.ts\",\"vitest.config.ts\",\"playwright.config.ts\",\"monitor.ts\",\"vercel.json\" -Recurse)",
+      "Bash(Select-Object FullName)",
+      "Bash(dir /s /b \"F:\\\\Personal\\\\replog\\\\app\\\\sw.ts\" \"F:\\\\Personal\\\\replog\\\\vitest.config.ts\" \"F:\\\\Personal\\\\replog\\\\playwright.config.ts\" \"F:\\\\Personal\\\\replog\\\\vercel.json\" \"F:\\\\Personal\\\\replog\\\\instrumentation.ts\" \"F:\\\\Personal\\\\replog\\\\lib\\\\monitor.ts\")",
+      "Bash(pnpm typecheck *)",
+      "Bash(git stash *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm build *)"
+    ],
+    "additionalDirectories": [
+      "F:\\Personal\\replog\\app\\app\\admin\\exercises\\[id]"
+    ]
+  }
+}

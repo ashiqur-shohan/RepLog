@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/* ============================================================
+ * replog · design tokens
+ * Dark-mode default. Light mode applied via `class="light"` on
+ * <html> (next-themes attribute="class"). Tokens are exposed as
+ * CSS variables and re-declared inside @theme for Tailwind v4.
+ * ============================================================ */
+
+:root {
+  --background: #0a0b0d;
+  --foreground: #f4f4f5;
+  --card: #131418;
+  --card-foreground: #f4f4f5;
+  --popover: #131418;
+  --popover-foreground: #f4f4f5;
+  --muted: #1c1d22;
+  --muted-foreground: #8a8b92;
+  --border: #26272d;
+  --input: #1c1d22;
+  --ring: #e8ff5c;
+  --primary: #e8ff5c;
+  --primary-foreground: #0a0b0d;
+  --secondary: #1c1d22;
+  --secondary-foreground: #f4f4f5;
+  --accent: #ff5a1f;
+  --accent-foreground: #0a0b0d;
+  --destructive: #f43f5e;
+  --destructive-foreground: #ffffff;
+  --success: #22c55e;
+  --success-foreground: #0a0b0d;
+  --warning: #f59e0b;
+  --warning-foreground: #0a0b0d;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-glow-primary: 0 0 24px rgba(232, 255, 92, 0.25);
+}
+
+.light {
+  --background: #fafaf9;
+  --foreground: #0a0b0d;
+  --card: #ffffff;
+  --card-foreground: #0a0b0d;
+  --popover: #ffffff;
+  --popover-foreground: #0a0b0d;
+  --muted: #f1f1ef;
+  --muted-foreground: #6b6c72;
+  --border: #e5e5e3;
+  --input: #f1f1ef;
+  --ring: #1a1b1f;
+  --primary: #1a1b1f;
+  --primary-foreground: #e8ff5c;
+  --secondary: #f1f1ef;
+  --secondary-foreground: #0a0b0d;
+  --accent: #e04a0f;
+  --accent-foreground: #ffffff;
+  --destructive: #e11d48;
+  --destructive-foreground: #ffffff;
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --warning: #d97706;
+  --warning-foreground: #ffffff;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --font-sans:
+    var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "Helvetica Neue", sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, monospace;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* Numeric / monospace stat values use tabular-nums so set logs align. */
+.mono,
+.tabular {
+  font-feature-settings: "tnum" 1, "cv11" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus ring: visible 2px outline with offset, never removed — only restyled. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* iOS / Android safe-area padding helpers for bottom nav and rest-timer bar */
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}
+
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 0px);
+}
+
+/* Premium glow used for the active CTA and PR celebration */
+.shadow-glow-primary {
+  box-shadow: var(--shadow-glow-primary);
+}
+
+/* Reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
