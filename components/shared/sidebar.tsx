@@ -6,13 +6,13 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils/cn";
 
 const NAV = [
-  { href: "/app/dashboard", label: "Dashboard", icon: Home },
-  { href: "/app/library", label: "Library", icon: Dumbbell },
-  { href: "/app/plans", label: "Plans", icon: ListChecks },
-  { href: "/app/history", label: "History", icon: History },
-  { href: "/app/progress", label: "Progress", icon: LineChart },
-  { href: "/app/profile", label: "Profile", icon: User },
-  { href: "/app/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard", label: "Dashboard", icon: Home },
+  { href: "/library", label: "Library", icon: Dumbbell },
+  { href: "/plans", label: "Plans", icon: ListChecks },
+  { href: "/history", label: "History", icon: History },
+  { href: "/progress", label: "Progress", icon: LineChart },
+  { href: "/profile", label: "Profile", icon: User },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function Sidebar({
@@ -29,7 +29,7 @@ export function Sidebar({
   const pathname = usePathname() ?? "";
   return (
     <aside className="hidden md:flex md:flex-col border-r border-border px-4 py-6 sticky top-0 h-dvh">
-      <Link href="/app/dashboard" className="flex items-center gap-2 mb-8 px-2">
+      <Link href="/dashboard" className="flex items-center gap-2 mb-8 px-2">
         <div className="w-8 h-8 rounded-md bg-primary grid place-items-center font-mono font-semibold text-primary-foreground">
           R
         </div>
@@ -54,10 +54,10 @@ export function Sidebar({
         })}
         {showAdmin && (
           <Link
-            href="/app/admin"
+            href="/admin"
             className={cn(
               "flex items-center gap-3 px-3 py-2 rounded-md transition-colors",
-              pathname.startsWith("/app/admin")
+              pathname.startsWith("/admin")
                 ? "bg-muted text-foreground"
                 : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
             )}
@@ -74,7 +74,7 @@ export function Sidebar({
         <div className="text-muted-foreground">{tier === "pro" ? "Pro plan" : "Free plan"}</div>
         {tier === "free" && (
           <Link
-            href="/app/settings/billing"
+            href="/settings/billing"
             className="mt-2 inline-block w-full text-center bg-primary text-primary-foreground rounded py-1.5 text-xs font-medium"
           >
             Upgrade to Pro

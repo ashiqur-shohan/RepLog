@@ -62,7 +62,7 @@ export async function addMeasurement(input: unknown): Promise<ActionResult<{ id:
 
   if (error || !raw) return actionErr(error?.message ?? "Could not save measurement");
   const data = raw as { id: string };
-  revalidatePath("/app/progress");
+  revalidatePath("/progress");
   return actionOk({ id: data.id });
 }
 
@@ -95,6 +95,6 @@ export async function deleteMeasurement(id: string): Promise<ActionResult<void>>
     .eq("user_id", user.id);
 
   if (error) return actionErr(error.message);
-  revalidatePath("/app/progress");
+  revalidatePath("/progress");
   return actionOk(undefined);
 }

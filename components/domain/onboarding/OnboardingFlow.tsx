@@ -55,7 +55,7 @@ export function OnboardingFlow() {
         toast.error(result.error);
         return;
       }
-      router.replace("/app/dashboard");
+      router.replace("/dashboard");
     });
   }
 

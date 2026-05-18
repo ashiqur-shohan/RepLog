@@ -1,6 +1,12 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getUser } from "@/lib/guards";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+  // If the visitor is already signed in, bounce them straight to the app.
+  const { user } = await getUser();
+  if (user) redirect("/dashboard");
+
   return (
     <div className="min-h-dvh grid place-items-center px-6 py-12">
       <div className="w-full max-w-sm">

@@ -183,7 +183,7 @@ export function ExerciseForm({ muscleGroups, equipment, initialValues }: Props) 
         return;
       }
       toast.success(initialValues?.id ? "Exercise updated." : "Exercise created.");
-      router.push("/app/admin/exercises");
+      router.push("/admin/exercises");
     });
   }
 
@@ -423,7 +423,7 @@ export function ExerciseForm({ muscleGroups, equipment, initialValues }: Props) 
         <Button
           type="button"
           variant="outline"
-          onClick={() => router.push("/app/admin/exercises")}
+          onClick={() => router.push("/admin/exercises")}
           disabled={pending}
         >
           Cancel

@@ -93,7 +93,7 @@ export function ActiveWorkout({ session, weightUnit }: { session: SessionData; w
       }
       store.endWorkout();
       toast.success("Session saved");
-      router.replace(`/app/history/${session.id}`);
+      router.replace(`/history/${session.id}`);
     });
   }
 
@@ -104,7 +104,7 @@ export function ActiveWorkout({ session, weightUnit }: { session: SessionData; w
     <div className="min-h-dvh pb-32">
       <header className="px-4 pt-3 pb-3 flex items-center justify-between safe-top">
         <Link
-          href="/app/dashboard"
+          href="/dashboard"
           aria-label="Close workout"
           className="text-muted-foreground hover:text-foreground"
         >

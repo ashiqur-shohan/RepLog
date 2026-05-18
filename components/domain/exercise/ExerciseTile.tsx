@@ -6,7 +6,7 @@ export function ExerciseTile({ exercise }: { exercise: LibraryExercise }) {
   const primary = exercise.muscles.find((m) => m.role === "primary")?.name ?? "—";
   return (
     <Link
-      href={`/app/library/exercise/${exercise.slug}`}
+      href={`/library/exercise/${exercise.slug}`}
       className="rounded-lg border border-border overflow-hidden bg-card hover:border-primary/50 transition-colors block"
     >
       <ExerciseMedia

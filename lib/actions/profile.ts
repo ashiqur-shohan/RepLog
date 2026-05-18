@@ -35,8 +35,8 @@ export async function updateProfile(formData: FormData): Promise<ActionResult<vo
     log.error("profile update failed", { userId: user.id, reason: error.message });
     return actionErr("Could not update profile");
   }
-  revalidatePath("/app/profile");
-  revalidatePath("/app", "layout");
+  revalidatePath("/profile");
+  revalidatePath("/", "layout");
   return actionOk(undefined);
 }
 
@@ -60,7 +60,7 @@ export async function completeOnboarding(formData: FormData): Promise<ActionResu
     .eq("id", user.id);
 
   if (error) return actionErr("Could not save onboarding");
-  revalidatePath("/app", "layout");
+  revalidatePath("/", "layout");
   return actionOk(undefined);
 }
 
@@ -88,7 +88,7 @@ export async function uploadAvatar(formData: FormData): Promise<ActionResult<{ u
     .eq("id", user.id);
   if (profErr) return actionErr(profErr.message);
 
-  revalidatePath("/app", "layout");
+  revalidatePath("/", "layout");
   return actionOk({ url: pub.publicUrl });
 }
 

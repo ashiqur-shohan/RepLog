@@ -25,7 +25,8 @@
       "Bash(pnpm typecheck *)",
       "Bash(git stash *)",
       "Bash(pnpm test *)",
-      "Bash(pnpm build *)"
+      "Bash(pnpm build *)",
+      "Bash(xargs -0 sed -i 's#\"/app/#\"/#g; s#'\"'\"'/app/#'\"'\"'/#g; s#`/app/#`/#g')"
     ],
     "additionalDirectories": [
       "F:\\Personal\\replog\\app\\app\\admin\\exercises\\[id]"

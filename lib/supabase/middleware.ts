@@ -3,16 +3,15 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export type CookieEntry = { name: string; value: string; options?: CookieOptions };
 
-const PUBLIC_PREFIXES = ["/", "/login", "/signup", "/forgot", "/auth", "/api/stripe", "/api/auth", "/pricing", "/blog"];
-const APP_PREFIX = "/app";
-
-function isPublic(pathname: string) {
-  if (pathname.startsWith("/_next") || pathname.startsWith("/static") || pathname.includes(".")) {
-    return true;
-  }
-  return PUBLIC_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
-}
-
+/**
+ * Refresh the Supabase auth session cookie on every request. Authorization
+ * (who can see which page) is enforced inside route-group layouts:
+ *   - app/(app)/layout.tsx  → requireUser()  redirects to /login
+ *   - app/(auth)/layout.tsx → redirects authed users to /dashboard
+ *
+ * Keeping the middleware free of path-matching avoids drift when routes
+ * are added or renamed.
+ */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -37,29 +36,10 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  // IMPORTANT: getUser() re-validates the JWT with Supabase. Never use getSession()
-  // here — it trusts the cookie value as-is, which an attacker could spoof.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { pathname, search } = request.nextUrl;
-  const isAppRoute = pathname.startsWith(APP_PREFIX);
-
-  if (!user && isAppRoute) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/login";
-    redirectUrl.searchParams.set("next", pathname + search);
-    return NextResponse.redirect(redirectUrl);
-  }
-
-  if (user && (pathname === "/login" || pathname === "/signup")) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/app/dashboard";
-    return NextResponse.redirect(redirectUrl);
-  }
+  // IMPORTANT: getUser() re-validates the JWT with Supabase. Never use
+  // getSession() — it trusts the cookie value as-is, which an attacker
+  // could spoof.
+  await supabase.auth.getUser();
 
   return supabaseResponse;
 }
-
-export { isPublic };

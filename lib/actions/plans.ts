@@ -65,7 +65,7 @@ export async function createPlan(formData: FormData): Promise<ActionResult<{ id:
     .select("id")
     .single();
   if (error || !data) return actionErr(error?.message ?? "Could not create plan");
-  revalidatePath("/app/plans");
+  revalidatePath("/plans");
   return actionOk({ id: data.id });
 }
 
@@ -83,7 +83,7 @@ export async function addPlanDay(formData: FormData): Promise<ActionResult<{ id:
     .select("id")
     .single();
   if (error || !data) return actionErr(error?.message ?? "Could not create day");
-  revalidatePath(`/app/plans/${parsed.data.plan_id}/edit`);
+  revalidatePath(`/plans/${parsed.data.plan_id}/edit`);
   return actionOk({ id: data.id });
 }
 
@@ -140,6 +140,6 @@ export async function deletePlan(planId: string): Promise<ActionResult<void>> {
     .eq("id", planId)
     .eq("user_id", user.id);
   if (error) return actionErr(error.message);
-  revalidatePath("/app/plans");
+  revalidatePath("/plans");
   return actionOk(undefined);
 }

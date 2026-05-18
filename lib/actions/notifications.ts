@@ -34,7 +34,7 @@ export async function updateNotificationPrefs(
   );
 
   if (error) return actionErr(error.message);
-  revalidatePath("/app/settings/notifications");
+  revalidatePath("/settings/notifications");
   return actionOk(undefined);
 }
 

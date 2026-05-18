@@ -15,7 +15,9 @@ export function LoginForm({
 }) {
   const router = useRouter();
   const sp = use(searchParamsPromise);
-  const next = sp.next && sp.next.startsWith("/app") ? sp.next : "/app/dashboard";
+  // Same-origin guard: accept only paths starting with a single "/" — block
+  // protocol-relative redirects like "//evil.com".
+  const next = sp.next && sp.next.startsWith("/") && !sp.next.startsWith("//") ? sp.next : "/dashboard";
   const [pending, startTransition] = useTransition();
   const [errors, setErrors] = useState<Record<string, string[]>>({});
 

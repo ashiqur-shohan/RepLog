@@ -173,7 +173,7 @@ export async function upsertExercise(
     if (insErr) return actionErr(insErr.message);
   }
 
-  revalidatePath("/app/admin/exercises");
+  revalidatePath("/admin/exercises");
   return actionOk({ id: exerciseId });
 }
 
@@ -240,7 +240,7 @@ export async function deleteExercise(id: string): Promise<ActionResult<void>> {
     .eq("id", id) as { error: { message: string } | null };
 
   if (error) return actionErr(error.message);
-  revalidatePath("/app/admin/exercises");
+  revalidatePath("/admin/exercises");
   return actionOk(undefined);
 }
 

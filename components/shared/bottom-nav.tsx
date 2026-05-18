@@ -6,16 +6,16 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils/cn";
 
 const TABS = [
-  { href: "/app/dashboard", label: "Home", icon: Home },
-  { href: "/app/library", label: "Library", icon: ListChecks },
-  { href: "/app/progress", label: "Progress", icon: LineChart },
-  { href: "/app/profile", label: "Profile", icon: User },
+  { href: "/dashboard", label: "Home", icon: Home },
+  { href: "/library", label: "Library", icon: ListChecks },
+  { href: "/progress", label: "Progress", icon: LineChart },
+  { href: "/profile", label: "Profile", icon: User },
 ];
 
 export function BottomNav({ showAdmin }: { showAdmin: boolean }) {
   const pathname = usePathname() ?? "";
   // Hide on workout focus mode (active logger)
-  if (pathname.startsWith("/app/workout/")) return null;
+  if (pathname.startsWith("/workout/")) return null;
   return (
     <nav
       aria-label="Bottom"
@@ -39,7 +39,7 @@ export function BottomNav({ showAdmin }: { showAdmin: boolean }) {
           );
         })}
         <Link
-          href="/app/workout/new"
+          href="/workout/new"
           aria-label="Start a workout"
           className="-mt-6 mx-auto w-14 h-14 rounded-full bg-primary text-primary-foreground grid place-items-center shadow-glow-primary"
         >

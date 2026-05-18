@@ -69,8 +69,8 @@ export async function finishSession(input: { session_id: string; notes?: string 
     .eq("id", parsed.data.session_id)
     .eq("user_id", user.id);
   if (error) return actionErr(error.message);
-  revalidatePath("/app/history");
-  revalidatePath("/app/dashboard");
+  revalidatePath("/history");
+  revalidatePath("/dashboard");
   return actionOk(undefined);
 }
 

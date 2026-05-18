@@ -34,7 +34,7 @@ export async function AppShell({ children }: { children: ReactNode }) {
       <div className="flex flex-col min-h-dvh">
         {/* mobile top bar */}
         <header className="md:hidden flex items-center justify-between px-5 pt-3 pb-3 border-b border-border safe-top">
-          <Link href="/app/dashboard" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-md bg-primary grid place-items-center font-mono font-semibold text-primary-foreground">
               R
             </div>
@@ -42,7 +42,7 @@ export async function AppShell({ children }: { children: ReactNode }) {
           </Link>
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Link href="/app/profile" aria-label="Profile">
+            <Link href="/profile" aria-label="Profile">
               <Avatar className="h-9 w-9">
                 <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
