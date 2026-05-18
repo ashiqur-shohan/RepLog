@@ -6,7 +6,7 @@ import { actionErr, actionOk, type ActionResult } from "@/lib/actions/types";
 import { measurementSchema } from "@/lib/validators/workout";
 import { z } from "zod";
 
-const ALLOWED_METRICS = ["bodyweight", "body_fat_pct", "waist", "chest", "arm", "thigh"] as const;
+const ALLOWED_METRICS = ["bodyweight", "body_fat", "waist", "chest", "arm", "thigh", "hip"] as const;
 type Metric = (typeof ALLOWED_METRICS)[number];
 
 const ALLOWED_RANGES = ["4W", "12W", "6M", "1Y", "all"] as const;
@@ -18,7 +18,7 @@ export interface Measurement {
   value: number;
   unit: string;
   measured_at: string;
-  notes: string | null;
+  note: string | null;
 }
 
 function rangeToStartDate(range: Range): string {
@@ -55,7 +55,7 @@ export async function addMeasurement(input: unknown): Promise<ActionResult<{ id:
       value: parsed.data.value,
       unit: parsed.data.unit,
       measured_at: parsed.data.measured_at ?? new Date().toISOString(),
-      notes: parsed.data.notes || null,
+      note: parsed.data.note || null,
     } as never)
     .select("id")
     .single();
@@ -72,7 +72,7 @@ export async function listMeasurements(metric: Metric, range: Range): Promise<Me
 
   const { data: raw, error } = await supabase
     .from("body_measurements")
-    .select("id, metric, value, unit, measured_at, notes")
+    .select("id, metric, value, unit, measured_at, note")
     .eq("user_id", user.id)
     .eq("metric", metric as string)
     .is("deleted_at", null)
@@ -88,7 +88,6 @@ export async function deleteMeasurement(id: string): Promise<ActionResult<void>>
   if (!idParsed.success) return actionErr("Invalid id");
 
   const { user, supabase } = await requireUser();
-  // Soft-delete by setting deleted_at
   const { error } = await supabase
     .from("body_measurements")
     .update({ deleted_at: new Date().toISOString() } as never)

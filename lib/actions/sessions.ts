@@ -118,6 +118,12 @@ export async function getDashboardSummary() {
   return {
     streak: (streakRes.data as number | null) ?? 0,
     recentPRs: prsRes.data ?? [],
-    weeklyVolume: (weekRes.data as Array<{ muscle_group: string; total_volume: number }>) ?? [],
+    weeklyVolume:
+      (weekRes.data as Array<{
+        muscle_group_id: string;
+        muscle_slug: string;
+        muscle_name: string;
+        volume: number;
+      }> | null) ?? [],
   };
 }

@@ -6,32 +6,36 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { updateNotificationPrefs, type NotificationPrefs } from "@/lib/actions/notifications";
 
+type BooleanKey = {
+  [K in keyof NotificationPrefs]: NotificationPrefs[K] extends boolean ? K : never;
+}[keyof NotificationPrefs];
+
 interface NotificationToggle {
-  key: keyof NotificationPrefs;
+  key: BooleanKey;
   label: string;
   description: string;
 }
 
 const TOGGLES: NotificationToggle[] = [
   {
-    key: "email_enabled",
-    label: "Email notifications",
-    description: "Receive notifications via email",
+    key: "email_workout_reminders",
+    label: "Workout reminders (email)",
+    description: "Email nudges to keep your streak alive",
   },
   {
-    key: "push_enabled",
-    label: "Push notifications",
-    description: "Browser / device push alerts",
-  },
-  {
-    key: "weekly_summary",
-    label: "Weekly summary",
+    key: "email_weekly_digest",
+    label: "Weekly digest (email)",
     description: "Your weekly volume and PR recap every Monday",
   },
   {
-    key: "rest_reminder",
-    label: "Rest timer reminder",
-    description: "Chime when your rest period ends",
+    key: "email_marketing",
+    label: "Product news (email)",
+    description: "Occasional updates about new features",
+  },
+  {
+    key: "push_workout_reminders",
+    label: "Workout reminders (push)",
+    description: "Browser / device push alerts",
   },
 ];
 
@@ -43,13 +47,12 @@ export function NotificationToggles({ initialPrefs }: NotificationTogglesProps) 
   const [prefs, setPrefs] = useState<NotificationPrefs>(initialPrefs);
   const [pending, startTransition] = useTransition();
 
-  function handleToggle(key: keyof NotificationPrefs, value: boolean) {
+  function handleToggle(key: BooleanKey, value: boolean) {
     const next = { ...prefs, [key]: value };
     setPrefs(next);
     startTransition(async () => {
       const result = await updateNotificationPrefs(next);
       if (!result.ok) {
-        // Revert on failure
         setPrefs(prefs);
         toast.error(result.error);
       }

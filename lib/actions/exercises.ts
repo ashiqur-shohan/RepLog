@@ -20,8 +20,8 @@ export async function listMuscleGroups() {
   const { supabase } = await requireUser();
   const { data, error } = await supabase
     .from("muscle_groups")
-    .select("id, name, slug, sort_order")
-    .order("sort_order", { ascending: true });
+    .select("id, name, slug, display_order")
+    .order("display_order", { ascending: true });
   if (error) throw error;
   return data ?? [];
 }

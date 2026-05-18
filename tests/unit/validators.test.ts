@@ -180,7 +180,7 @@ describe("planDaySchema", () => {
     const result = planDaySchema.safeParse({
       plan_id: validUuid,
       name: "Day 1 — Push",
-      day_number: 1,
+      position: 1,
     });
     expect(result.success).toBe(true);
   });
@@ -189,34 +189,34 @@ describe("planDaySchema", () => {
     const result = planDaySchema.safeParse({
       plan_id: "not-a-uuid",
       name: "Day 1",
-      day_number: 1,
+      position: 1,
     });
     expect(result.success).toBe(false);
   });
 
-  it("rejects day_number = 0", () => {
+  it("rejects position = 0", () => {
     const result = planDaySchema.safeParse({
       plan_id: validUuid,
       name: "Day 0",
-      day_number: 0,
+      position: 0,
     });
     expect(result.success).toBe(false);
   });
 
-  it("rejects day_number > 31", () => {
+  it("rejects position > 31", () => {
     const result = planDaySchema.safeParse({
       plan_id: validUuid,
       name: "Day 32",
-      day_number: 32,
+      position: 32,
     });
     expect(result.success).toBe(false);
   });
 
-  it("accepts day_number = 31", () => {
+  it("accepts position = 31", () => {
     const result = planDaySchema.safeParse({
       plan_id: validUuid,
       name: "Day 31",
-      day_number: 31,
+      position: 31,
     });
     expect(result.success).toBe(true);
   });
@@ -225,7 +225,7 @@ describe("planDaySchema", () => {
     const result = planDaySchema.safeParse({
       plan_id: validUuid,
       name: "",
-      day_number: 1,
+      position: 1,
     });
     expect(result.success).toBe(false);
   });
@@ -252,7 +252,7 @@ describe("planDayExerciseSchema", () => {
       target_sets: 4,
       target_reps_min: 8,
       target_reps_max: 12,
-      target_weight_kg: 80,
+      target_rpe: 8,
       rest_seconds: 90,
       notes: "Keep back flat",
     });
@@ -279,10 +279,10 @@ describe("planDayExerciseSchema", () => {
     expect(result.success).toBe(true);
   });
 
-  it("rejects target_weight_kg > 1000", () => {
+  it("rejects target_rpe > 10", () => {
     const result = planDayExerciseSchema.safeParse({
       ...base,
-      target_weight_kg: 1001,
+      target_rpe: 11,
     });
     expect(result.success).toBe(false);
   });

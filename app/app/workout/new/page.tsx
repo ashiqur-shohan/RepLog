@@ -15,10 +15,10 @@ export default async function NewWorkoutPage() {
   const { data: days } = firstPlanId
     ? await supabase
         .from("plan_days")
-        .select("id, name, day_number")
+        .select("id, name, position")
         .eq("plan_id", firstPlanId)
         .is("deleted_at", null)
-        .order("day_number")
+        .order("position")
     : { data: null };
 
   async function start(planDayId: string | null) {
@@ -45,7 +45,7 @@ export default async function NewWorkoutPage() {
               <form key={d.id} action={start.bind(null, d.id)}>
                 <button type="submit" className="w-full text-left">
                   <Card className="p-4 hover:border-primary/50 transition-colors">
-                    <div className="text-xs text-muted-foreground">Day {d.day_number}</div>
+                    <div className="text-xs text-muted-foreground">Day {d.position}</div>
                     <div className="font-medium">{d.name}</div>
                   </Card>
                 </button>

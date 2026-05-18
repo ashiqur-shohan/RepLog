@@ -44,7 +44,7 @@ interface MuscleGroupsRow extends DefaultedCols {
   id: Uuid;
   name: string;
   slug: string;
-  sort_order: number;
+  display_order: number;
 }
 
 interface EquipmentRow extends DefaultedCols {
@@ -88,7 +88,7 @@ interface PlanDaysRow extends DefaultedCols, SoftDelete {
   id: Uuid;
   plan_id: Uuid;
   name: string;
-  day_number: number;
+  position: number;
 }
 
 interface PlanDayExercisesRow extends DefaultedCols, SoftDelete {
@@ -99,7 +99,7 @@ interface PlanDayExercisesRow extends DefaultedCols, SoftDelete {
   target_sets: number | null;
   target_reps_min: number | null;
   target_reps_max: number | null;
-  target_weight_kg: number | null;
+  target_rpe: number | null;
   rest_seconds: number | null;
   notes: string | null;
 }

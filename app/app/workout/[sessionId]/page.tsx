@@ -14,9 +14,9 @@ export default async function ActiveWorkoutPage({
     .from("workout_sessions")
     .select(
       `id, started_at, finished_at, notes,
-       plan_day:plan_days(id, name, day_number,
+       plan_day:plan_days(id, name, position,
          plan:workout_plans(name),
-         plan_day_exercises(id, exercise_id, position, target_sets, target_reps_min, target_reps_max, target_weight_kg, rest_seconds,
+         plan_day_exercises(id, exercise_id, position, target_sets, target_reps_min, target_reps_max, target_rpe, rest_seconds,
            exercise:exercises(id, name, slug, thumbnail_url, media_url, media_type)
          )
        ),

@@ -35,7 +35,7 @@ type PlanDayExercise = {
   target_sets: number | null;
   target_reps_min: number | null;
   target_reps_max: number | null;
-  target_weight_kg: number | null;
+  target_rpe: number | null;
   rest_seconds: number | null;
   exercise: { id: string; name: string; slug: string; thumbnail_url: string | null } | null;
 };
@@ -43,7 +43,7 @@ type PlanDayExercise = {
 type PlanDay = {
   id: string;
   name: string;
-  day_number: number;
+  position: number;
   plan_day_exercises: PlanDayExercise[];
 };
 
@@ -65,7 +65,7 @@ export function PlanEditor({
   muscleGroups: MuscleGroup[];
   exercises: LibraryExercise[];
 }) {
-  const sortedDays = [...plan.plan_days].sort((a, b) => a.day_number - b.day_number);
+  const sortedDays = [...plan.plan_days].sort((a, b) => a.position - b.position);
   const [activeDayId, setActiveDayId] = useState<string | null>(sortedDays[0]?.id ?? null);
   const [pickerOpen, setPickerOpen] = useState(true);
 
@@ -78,7 +78,7 @@ export function PlanEditor({
           <div className="text-xs text-muted-foreground">Editing plan</div>
           <h1 className="text-xl font-semibold tracking-tight">{plan.name}</h1>
         </div>
-        <AddDayButton planId={plan.id} nextDayNumber={(sortedDays.at(-1)?.day_number ?? 0) + 1} />
+        <AddDayButton planId={plan.id} nextDayNumber={(sortedDays.at(-1)?.position ?? 0) + 1} />
       </div>
 
       <div className="grid md:grid-cols-[1fr_320px] gap-6">
@@ -102,7 +102,7 @@ export function PlanEditor({
                         : "border-transparent text-muted-foreground hover:text-foreground",
                     )}
                   >
-                    Day {d.day_number} · {d.name}
+                    Day {d.position} · {d.name}
                   </button>
                 ))}
               </div>
@@ -158,7 +158,7 @@ function AddDayButton({ planId, nextDayNumber }: { planId: string; nextDayNumber
           const fd = new FormData();
           fd.set("plan_id", planId);
           fd.set("name", `Day ${nextDayNumber}`);
-          fd.set("day_number", String(nextDayNumber));
+          fd.set("position", String(nextDayNumber));
           const r = await addPlanDay(fd);
           if (!r.ok) toast.error(r.error);
         })

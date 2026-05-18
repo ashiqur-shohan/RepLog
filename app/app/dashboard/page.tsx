@@ -19,7 +19,7 @@ export default async function DashboardPage() {
 
   const weightUnit = (profile?.weight_unit ?? "kg") as WeightUnit;
   const totalWeeklyVolume = (summary.weeklyVolume ?? []).reduce(
-    (acc, row) => acc + Number(row.total_volume ?? 0),
+    (acc, row) => acc + Number(row.volume ?? 0),
     0,
   );
 

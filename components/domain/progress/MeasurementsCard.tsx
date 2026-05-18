@@ -18,7 +18,7 @@ import {
 import { addMeasurement, deleteMeasurement } from "@/lib/actions/measurements";
 import { format } from "date-fns";
 
-type Metric = "bodyweight" | "body_fat_pct" | "waist" | "chest" | "arm" | "thigh";
+type Metric = "bodyweight" | "body_fat" | "waist" | "chest" | "arm" | "thigh";
 type MeasurementUnit = "kg" | "lb" | "cm" | "in" | "percent";
 
 interface Measurement {
@@ -26,12 +26,12 @@ interface Measurement {
   value: number;
   unit: string;
   measured_at: string;
-  notes: string | null;
+  note: string | null;
 }
 
 const METRIC_LABELS: Record<Metric, string> = {
   bodyweight: "Bodyweight",
-  body_fat_pct: "Body fat %",
+  body_fat: "Body fat %",
   waist: "Waist",
   chest: "Chest",
   arm: "Arm",
@@ -40,7 +40,7 @@ const METRIC_LABELS: Record<Metric, string> = {
 
 const METRIC_DEFAULT_UNIT: Record<Metric, MeasurementUnit> = {
   bodyweight: "kg",
-  body_fat_pct: "percent",
+  body_fat: "percent",
   waist: "cm",
   chest: "cm",
   arm: "cm",
@@ -74,7 +74,7 @@ export function MeasurementsCard({ metric, initialMeasurements }: MeasurementsCa
         metric,
         value: num,
         unit,
-        notes: notes || undefined,
+        note: notes || undefined,
       });
       if (!result.ok) {
         toast.error(result.error);
@@ -87,7 +87,7 @@ export function MeasurementsCard({ metric, initialMeasurements }: MeasurementsCa
           value: num,
           unit,
           measured_at: new Date().toISOString(),
-          notes: notes || null,
+          note: notes || null,
         },
       ]);
       setValue("");

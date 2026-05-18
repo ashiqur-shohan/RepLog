@@ -1,8 +1,9 @@
-import { ChevronLeft } from "lucide-react";
+import { Bookmark, ChevronLeft, Plus } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExerciseMedia } from "@/components/domain/exercise/ExerciseMedia";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getExerciseBySlug } from "@/lib/actions/exercises";
 
@@ -27,8 +28,10 @@ export default async function ExerciseDetailPage({
   const secondary = muscles.filter((m) => m.role === "secondary" && m.name).map((m) => m.name as string);
   const equipment = Array.isArray(ex.equipment) ? ex.equipment[0] : ex.equipment;
 
+  const addHref = `/app/plans?addExercise=${ex.slug}` as const;
+
   return (
-    <div className="max-w-3xl mx-auto px-5 md:px-8 py-6 pb-32">
+    <div className="max-w-3xl mx-auto px-5 md:px-8 py-6 max-md:pb-32">
       <Link
         href="/app/library"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
@@ -45,23 +48,41 @@ export default async function ExerciseDetailPage({
         autoplay
       />
 
-      <h1 className="text-3xl font-semibold tracking-tight mt-4">{ex.name}</h1>
+      {/* Title row — H1 on the left, primary + bookmark CTA cluster on the right (desktop) */}
+      <div className="mt-4 flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-3xl font-semibold tracking-tight">{ex.name}</h1>
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {primary.map((p) => (
+              <Badge key={p} variant="default">
+                {p}
+              </Badge>
+            ))}
+            {secondary.map((s) => (
+              <Badge key={s} variant="secondary">
+                {s}
+              </Badge>
+            ))}
+            {equipment?.name && <Badge variant="outline">{equipment.name}</Badge>}
+          </div>
+        </div>
 
-      <div className="flex flex-wrap gap-1.5 mt-3">
-        {primary.map((p) => (
-          <Badge key={p} variant="default">
-            {p}
-          </Badge>
-        ))}
-        {secondary.map((s) => (
-          <Badge key={s} variant="secondary">
-            {s}
-          </Badge>
-        ))}
-        {equipment?.name && <Badge variant="outline">{equipment.name}</Badge>}
+        {/* Desktop inline CTA — hidden on mobile */}
+        <div className="hidden md:flex items-center gap-2 shrink-0">
+          <Button size="icon" variant="outline" aria-label="Bookmark exercise">
+            <Bookmark />
+          </Button>
+          <Button size="lg" asChild>
+            <Link href={addHref}>
+              <Plus aria-hidden /> Add to workout
+            </Link>
+          </Button>
+        </div>
       </div>
 
-      {ex.description && <p className="text-sm text-muted-foreground mt-4">{ex.description as string}</p>}
+      {ex.description && (
+        <p className="text-sm text-muted-foreground mt-4">{ex.description as string}</p>
+      )}
 
       <Tabs defaultValue="instructions" className="mt-6">
         <TabsList>
@@ -90,13 +111,16 @@ export default async function ExerciseDetailPage({
         </TabsContent>
       </Tabs>
 
-      <div className="fixed bottom-0 left-0 right-0 md:left-60 px-5 pb-5 pt-3 bg-gradient-to-t from-background to-transparent">
-        <Link
-          href={`/app/plans?addExercise=${ex.slug}`}
-          className="block w-full text-center bg-primary text-primary-foreground py-3 rounded-md font-medium shadow-glow-primary"
-        >
-          Add to workout
-        </Link>
+      {/* Mobile-only sticky CTA — sits above the bottom tab nav, respects safe-area */}
+      <div
+        className="md:hidden fixed inset-x-0 px-5 pt-3 pb-3 bg-gradient-to-t from-background via-background/95 to-transparent"
+        style={{ bottom: "calc(env(safe-area-inset-bottom) + 64px)" }}
+      >
+        <Button size="lg" className="w-full" asChild>
+          <Link href={addHref}>
+            <Plus aria-hidden /> Add to workout
+          </Link>
+        </Button>
       </div>
     </div>
   );

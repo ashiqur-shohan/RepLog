@@ -24,7 +24,7 @@ export async function getPlan(planId: string) {
   const { data, error } = await supabase
     .from("workout_plans")
     .select(
-      `id, name, description, is_active, plan_days(id, name, day_number,
+      `id, name, description, is_active, plan_days(id, name, position,
         plan_day_exercises(id, exercise_id, position, target_sets,
           target_reps_min, target_reps_max, target_weight_kg, rest_seconds, notes,
           exercise:exercises(id, name, slug, thumbnail_url, media_url, media_type)
@@ -74,7 +74,7 @@ export async function addPlanDay(formData: FormData): Promise<ActionResult<{ id:
   const parsed = planDaySchema.safeParse({
     plan_id: formData.get("plan_id"),
     name: formData.get("name"),
-    day_number: Number(formData.get("day_number")),
+    position: Number(formData.get("position")),
   });
   if (!parsed.success) return actionErr("Invalid input", parsed.error.flatten().fieldErrors);
   const { data, error } = await supabase
@@ -96,9 +96,7 @@ export async function addPlanExercise(formData: FormData): Promise<ActionResult<
     target_sets: formData.get("target_sets") ? Number(formData.get("target_sets")) : undefined,
     target_reps_min: formData.get("target_reps_min") ? Number(formData.get("target_reps_min")) : undefined,
     target_reps_max: formData.get("target_reps_max") ? Number(formData.get("target_reps_max")) : undefined,
-    target_weight_kg: formData.get("target_weight_kg")
-      ? Number(formData.get("target_weight_kg"))
-      : undefined,
+    target_rpe: formData.get("target_rpe") ? Number(formData.get("target_rpe")) : undefined,
     rest_seconds: formData.get("rest_seconds") ? Number(formData.get("rest_seconds")) : undefined,
     notes: formData.get("notes") ?? "",
   });
